@@ -1,0 +1,17 @@
+{
+  "name": "Monkey Beach FM",
+  "short_name": "Monkey Beach FM",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ff7e5f",
+  "theme_color": "#ff7e5f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
