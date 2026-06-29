@@ -390,14 +390,16 @@
             }
         };
 
-        window.onload = function() {
-            if(playlist.length > 0) {
-                trackTitle.innerText = "Monkey Beach FM";
-                statusDisplay.innerText = "Klik op afspelen om te beginnen";
-                playBtn.disabled = false;
-                playBtn.innerText = "Afspelen";
-            }
-        };
+       window.onload = function() {
+    if(playlist.length > 0) {
+        trackTitle.innerText = "Monkey Beach FM";
+        statusDisplay.innerText = "Klik op afspelen om te beginnen";
+        playBtn.disabled = false;
+        playBtn.innerText = "Afspelen";
+    }
+    // DIT VOEGEN WE TOE: Zorgt dat Google Cast direct paraat staat op GitHub Pages
+    laadGoogleCastVeilig(); 
+};
 
         // ========================================================
         // 3. CODE VOOR DE APP-INSTALLATIE KNOP
