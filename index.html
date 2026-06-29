@@ -441,10 +441,13 @@
         }
 
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log(err));
-            });
-        }
+    window.addEventListener('load', () => {
+        // We vertellen de browser nu exact in welke submap de app leeft
+        navigator.serviceWorker.register('/monkeybeachfm/sw.js', { scope: '/monkeybeachfm/' })
+        .then(() => console.log("Service Worker succesvol geregistreerd voor GitHub!"))
+        .catch(err => console.log("SW fout:", err));
+    });
+}
 
         // ========================================================
         // 4. GOOGLE CAST LOGICA
