@@ -1,7 +1,8 @@
 {
   "name": "Monkey Beach FM",
   "short_name": "Monkey Beach FM",
-  "start_url": "./index.html",
+  "start_url": "/monkeybeachfm/index.html",
+  "scope": "/monkeybeachfm/",
   "display": "standalone",
   "background_color": "#ff7e5f",
   "theme_color": "#ff7e5f",
