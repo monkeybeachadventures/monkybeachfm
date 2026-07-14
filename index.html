@@ -58,7 +58,7 @@
             background: rgba(0, 0, 0, 0.1);
             padding: 15px;
             border-radius: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         #track-title {
@@ -70,6 +70,57 @@
         #status {
             font-size: 0.85rem;
             opacity: 0.7;
+        }
+
+        /* HISTORIE LIJST STYLING */
+        .history-container {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            padding: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-item {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            opacity: 0.75;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item::before {
+            content: "•";
+            color: #f0b661;
+            font-weight: bold;
         }
 
         /* STANDAARD KNOPPEN STYLING (DAGMODUS BRUIN) */
@@ -131,6 +182,10 @@
             border: 1px solid rgba(91, 192, 190, 0.4) !important;
             color: #5BC0BE !important;
         }
+
+        body.nacht-modus .history-item::before {
+            color: #5BC0BE;
+        }
     </style>
 </head>
 <body>
@@ -162,6 +217,14 @@
         <div class="track-info">
             <div id="track-title">Laden...</div>
             <div id="status">Afspelen</div>
+        </div>
+
+        <!-- NIEUW: NU GEDRAAID HISTORIE LIJST -->
+        <div class="history-container" id="history-box" style="display: none;">
+            <div class="history-title">🕒 Net gedraaid</div>
+            <ul class="history-list" id="history-list">
+                <!-- Wordt dynamisch gevuld via JavaScript -->
+            </ul>
         </div>
 
         <div class="controls">
@@ -234,7 +297,7 @@
             { title: "Bob Marley & The Wailers - Could You Be Loved", url: "https://www.dropbox.com/scl/fi/wgaurmyqqjzr3k9kp1hke/Bob-Marley-The-Wailers-Could-You-Be-Loved-Official-Music-Video.mp3?rlkey=nciwy3im51lcbpmc16wx18mla&st=4t2we6dg&dl=0", periode: "Middag" },
             { title: "Arrow - Hot Hot Hot", url: "https://www.dropbox.com/scl/fi/evultw0danr4ijqto0des/Arrow-Hot-Hot-Hot.mp3?rlkey=m3nc2cpxj7kat1ei6eufw4brq&st=kibcx4w5&dl=0", periode: "Middag" },
             { title: "Buena Vista Social Club - Dos Gardenias", url: "https://www.dropbox.com/scl/fi/inlogf07vd658jwvvd4ii/Buena-Vista-Social-Club-Dos-Gardenias.mp3?rlkey=c5ybypyyka1ntnmaciobuqdjg&st=hdipp5gm&dl=0", periode: "Middag" },
-            { title: "amitai kurtz - Motzart", url: "https://www.dropbox.com/scl/fi/asc97v1a9z78gx6o48zhp/amitai-kurtz-Motzart.wav?rlkey=ctmxikdojv0p3ll80jtvhkl5y&st=wx2f5kra&dl=0", periode: "middag" },
+             { title: "amitai kurtz - Motzart", url: "https://www.dropbox.com/scl/fi/asc97v1a9z78gx6o48zhp/amitai-kurtz-Motzart.wav?rlkey=ctmxikdojv0p3ll80jtvhkl5y&st=wx2f5kra&dl=0", periode: "middag" },
 { title: "amitai kurtz - Bach", url: "https://www.dropbox.com/scl/fi/k29dizu9z15zd3cd8wtyg/amitai-kurtz-Bach.wav?rlkey=tj2fv15rl5beh7pzer03kox2n&st=7i5s7465&dl=0", periode: "middag" },
 { title: "Herencia De Grandes- Ya Borracho", url: "https://www.dropbox.com/scl/fi/fa58a8y6efah5kawjcdz3/Herencia-De-Grandes-Ya-Borracho.mp3?rlkey=oli5ezpl9ep25fqrbb71af4kg&st=q4tn0g5h&dl=0", periode: "middag" },
             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd" },
@@ -258,10 +321,10 @@
         let isPlaying = false;
         let backgroundAudioCtx = null;
         
-        // HIER IS HET GEHEUGEN TOEGEVOEGD
         let vorigNummerUrl = ""; 
         let errorTimeout = null;
-        let afspeelGeschiedenis = []; // Slaat de geschiedenis op van gedraaide tracks
+        let afspeelGeschiedenis = []; // Slaat de geschiedenis op van gedraaide URL's
+        let gedraaideTracksNamen = []; // Slaat de titels op voor de visualisatie in de geschiedenis
 
         audioPlayer.preload = "auto";
 
@@ -302,7 +365,6 @@
 
             const uiteindelijkeLijst = gefilterdeLijst.length > 0 ? gefilterdeLijst : playlist;
 
-            // Limiteert het geheugen tot 8, of de helft van de lijst (als de lijst klein is) om loops te voorkomen
             const geschiedenisLimiet = Math.min(8, Math.floor(uiteindelijkeLijst.length / 2));
 
             let gekozenTrack;
@@ -325,8 +387,47 @@
             return gekozenTrack;
         }
 
+        // UPDATE DE VISUELE GESCHIEDENIS OP HET SCHERM
+        function updateGeschiedenisLijst(nieuweAfgelopenTrackTitel) {
+            // Voorkom jingles en reclames in de visuele historie voor een rustiger beeld (optioneel)
+            if (nieuweAfgelopenTrackTitel.includes("Monkey Beach FM") || nieuweAfgelopenTrackTitel.toLowerCase().includes("reclame")) {
+                return; 
+            }
+
+            // Voeg de zojuist afgelopen track toe aan de visuele lijst
+            gedraaideTracksNamen.unshift(nieuweAfgelopenTrackTitel);
+
+            // Behoud maximaal 3 tracks in de lijst
+            if (gedraaideTracksNamen.length > 3) {
+                gedraaideTracksNamen.pop();
+            }
+
+            const historyBox = document.getElementById('history-box');
+            const historyList = document.getElementById('history-list');
+
+            // Maak de lijst leeg en bouw hem opnieuw op
+            historyList.innerHTML = "";
+            gedraaideTracksNamen.forEach(titel => {
+                const li = document.createElement('li');
+                li.className = "history-item";
+                li.innerText = titel;
+                historyList.appendChild(li);
+            });
+
+            // Toon de box zodra er minimaal 1 nummer in staat
+            if (gedraaideTracksNamen.length > 0) {
+                historyBox.style.display = "block";
+            }
+        }
+
         function playRandomTrack() {
             if (playlist.length === 0) return;
+
+            // Haal de titel op van het nummer dat NU stopt met spelen (als dat er was)
+            const afgelopenTrackTitel = trackTitle.innerText;
+            if (afgelopenTrackTitel && afgelopenTrackTitel !== "Laden..." && afgelopenTrackTitel !== "Monkey Beach FM") {
+                updateGeschiedenisLijst(afgelopenTrackTitel);
+            }
 
             if (errorTimeout) {
                 clearTimeout(errorTimeout);
