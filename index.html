@@ -232,8 +232,8 @@
             { title: "Shakira - Zoo", url: "https://www.dropbox.com/scl/fi/9m1cjqk6zm05ghoj72ply/Shakira-Zoo-From-Zootopia-2.mp3?rlkey=1wkzk9yl1tncg5iwgbwwca02u&st=qpc6x01r&raw=1", periode: "Middag" },
             { title: "DJ Bobo - Chihuahua", url: "https://www.dropbox.com/scl/fi/crb0onbdko4r8h713kua7/DJ-BoBo-CHIHUAHUA-Official-Music-Video.mp3?rlkey=4im01lghuy20fo6df7f77mv2g&st=jr5d53nb&dl=0", periode: "Middag" },
             { title: "Bob Marley & The Wailers - Could You Be Loved", url: "https://www.dropbox.com/scl/fi/wgaurmyqqjzr3k9kp1hke/Bob-Marley-The-Wailers-Could-You-Be-Loved-Official-Music-Video.mp3?rlkey=nciwy3im51lcbpmc16wx18mla&st=4t2we6dg&dl=0", periode: "Middag" },
-{ title: "Arrow - Hot Hot Hot", url: "https://www.dropbox.com/scl/fi/evultw0danr4ijqto0des/Arrow-Hot-Hot-Hot.mp3?rlkey=m3nc2cpxj7kat1ei6eufw4brq&st=kibcx4w5&dl=0", periode: "Middag" },
-{ title: "Buena Vista Social Club - Dos Gardenias", url: "https://www.dropbox.com/scl/fi/inlogf07vd658jwvvd4ii/Buena-Vista-Social-Club-Dos-Gardenias.mp3?rlkey=c5ybypyyka1ntnmaciobuqdjg&st=hdipp5gm&dl=0", periode: "Middag" },
+            { title: "Arrow - Hot Hot Hot", url: "https://www.dropbox.com/scl/fi/evultw0danr4ijqto0des/Arrow-Hot-Hot-Hot.mp3?rlkey=m3nc2cpxj7kat1ei6eufw4brq&st=kibcx4w5&dl=0", periode: "Middag" },
+            { title: "Buena Vista Social Club - Dos Gardenias", url: "https://www.dropbox.com/scl/fi/inlogf07vd658jwvvd4ii/Buena-Vista-Social-Club-Dos-Gardenias.mp3?rlkey=c5ybypyyka1ntnmaciobuqdjg&st=hdipp5gm&dl=0", periode: "Middag" },
             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd" },
             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/fk5yfowi6dzick8jiol6o/Goedenacht-met-soundscape.mp3?rlkey=yu7unr2pjh33hfxnfgvrrf56g&st=bstzebuy&raw=1", periode: "avond" },
             { title: "Monkey Beach by Night", url: "https://www.dropbox.com/scl/fi/rn7skprd2flngjs4rl5sa/Ambiant-beach-at-night.mp4?rlkey=lxbgfpz6hryd35jsr8zznyoqh&st=412sto1j&raw=1", periode: "avond" },
@@ -254,8 +254,11 @@
 
         let isPlaying = false;
         let backgroundAudioCtx = null;
+        
+        // HIER IS HET GEHEUGEN TOEGEVOEGD
         let vorigNummerUrl = ""; 
         let errorTimeout = null;
+        let afspeelGeschiedenis = []; // Slaat de geschiedenis op van gedraaide tracks
 
         audioPlayer.preload = "auto";
 
@@ -277,12 +280,11 @@
             }
         }
 
-        // Haal een random track op uit de juiste periode
+        // SLIMMERE RANDOM FUNCTIE DIE DE LAATSTE 8 NUMMERS ONTHOUDT
         function getRandomTrack() {
             const huidigUur = new Date().getHours();
             let huidigePeriode = "altijd";
 
-            // CORRECTIE: Tijden logisch ingedeeld en hoofdletterongevoelig gemaakt
             if (huidigUur >= 4 && huidigUur < 5) {
                 huidigePeriode = "ochtend"; 
             } else if (huidigUur >= 5 && huidigUur < 23) {
@@ -295,18 +297,29 @@
                 return track.periode.toLowerCase() === huidigePeriode.toLowerCase() || track.periode.toLowerCase() === "altijd";
             });
 
-            // Als de gefilterde lijst leeg is (bijv. in de ochtend), pakken we de hele playlist
             const uiteindelijkeLijst = gefilterdeLijst.length > 0 ? gefilterdeLijst : playlist;
 
-            let randomIndex;
-            let pogingen = 0; // Extra beveiliging tegen infinite loops
+            // Limiteert het geheugen tot 8, of de helft van de lijst (als de lijst klein is) om loops te voorkomen
+            const geschiedenisLimiet = Math.min(8, Math.floor(uiteindelijkeLijst.length / 2));
+
+            let gekozenTrack;
+            let pogingen = 0;
             
             do {
-                randomIndex = Math.floor(Math.random() * uiteindelijkeLijst.length);
+                const randomIndex = Math.floor(Math.random() * uiteindelijkeLijst.length);
+                gekozenTrack = uiteindelijkeLijst[randomIndex];
                 pogingen++;
-            } while (uiteindelijkeLijst[randomIndex].url === vorigNummerUrl && uiteindelijkeLijst.length > 1 && pogingen < 10);
+            } while (afspeelGeschiedenis.includes(gekozenTrack.url) && pogingen < 40);
 
-            return uiteindelijkeLijst[randomIndex];
+            // Voeg de track toe aan de geschiedenis
+            afspeelGeschiedenis.push(gekozenTrack.url);
+
+            // Verwijder het oudste nummer als we boven de limiet komen
+            if (afspeelGeschiedenis.length > geschiedenisLimiet) {
+                afspeelGeschiedenis.shift();
+            }
+
+            return gekozenTrack;
         }
 
         function playRandomTrack() {
@@ -401,7 +414,6 @@
         playBtn.disabled = false;
         playBtn.innerText = "Afspelen";
     }
-    // DIT VOEGEN WE TOE: Zorgt dat Google Cast direct paraat staat op GitHub Pages
     laadGoogleCastVeilig(); 
 };
 
@@ -446,7 +458,6 @@
 
         if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        // We vertellen de browser nu exact in welke submap de app leeft
         navigator.serviceWorker.register('/monkeybeachfm/sw.js', { scope: '/monkeybeachfm/' })
         .then(() => console.log("Service Worker succesvol geregistreerd voor GitHub!"))
         .catch(err => console.log("SW fout:", err));
