@@ -222,6 +222,44 @@
             pointer-events: none; 
         }
 
+/* 5. DE STYLING VAN DE RETRO VLAM */
+        .lamp-flame {
+            position: absolute;
+            /* --- POSITIE: Schuif hiermee de vlam precies op het lontje --- */
+            top: 54.2%;          /* Hoe ver van de bovenkant */
+            left: 22.25%;         /* Hoe ver van de linkerkant */
+            transform: translate(-50%, -50%);
+            
+            /* --- VORM EN KLEUR VAN DE VLAM --- */
+            width: 14px;
+            height: 50px;
+            background: linear-gradient(to bottom, #fff 0%, #ffde6a 40%, #ff7b00 80%, rgba(255, 60, 0, 0) 100%);
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%; /* Maakt een traanvormige vlam */
+            
+            /* Warm pulserend omgevingslicht rondom de lamp */
+            box-shadow: 0 0 20px #ff9d00, 0 0 40px rgba(255, 157, 0, 0.6), inset 0 0 4px #ffffff;
+            
+            /* Activeer de flakker-animatie (duurt 0.15 seconden en herhaalt oneindig) */
+            animation: flicker 0.5s infinite alternate;
+            pointer-events: none; /* Je kunt er gewoon "doorheen" klikken */
+            opacity: 0.9;
+        }
+
+        /* --- DE FLAKKER ANIMATIE (DE MAGIE) --- */
+        @keyframes flicker {
+            0% {
+                transform: translate(-50%, -50%) scale(0.96) rotate(-1deg);
+                box-shadow: 0 0 18px #ff9d00, 0 0 35px rgba(255, 157, 0, 0.5), inset 0 0 4px #ffffff;
+                opacity: 0.85;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.04) rotate(1deg);
+                box-shadow: 0 0 25px #ffb700, 0 0 45px rgba(255, 183, 0, 0.7), inset 0 0 5px #ffffff;
+                opacity: 0.95;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -274,6 +312,9 @@
 
 <!-- ELEMENT 4: DE POSTER AAN DE MUUR -->
         <img src="https://www.dropbox.com/scl/fi/31fr5ik18pdbud649ccxi/MBFM-Poster-Donker.png?rlkey=pl5jcks5ji9sbs7tzhsjie4mg&st=ky4sodmd&raw=1" class="custom-poster" alt="Poster">
+
+<!-- ELEMENT 5: DE GEANIMEERDE VLAM VAN DE OLIELAMP -->
+        <div class="lamp-flame"></div>
 
     </div>
 
