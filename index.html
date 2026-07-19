@@ -328,7 +328,7 @@
         </div>
 
 <!-- ELEMENT 4: DE POSTER AAN DE MUUR -->
-        <img src="https://www.dropbox.com/scl/fi/31fr5ik18pdbud649ccxi/MBFM-Poster-Donker.png?rlkey=pl5jcks5ji9sbs7tzhsjie4mg&st=ky4sodmd&raw=1" class="custom-poster" alt="Poster">
+<img id="muur-poster" src="https://www.dropbox.com/scl/fi/31fr5ik18pdbud649ccxi/MBFM-Poster-Donker.png?rlkey=pl5jcks5ji9sbs7tzhsjie4mg&st=ky4sodmd&raw=1" class="custom-poster" alt="Poster">
 
 <!-- ELEMENT 5: DE GEANIMEERDE VLAM VAN DE OLIELAMP -->
         <div class="lamp-flame"></div>
@@ -639,6 +639,31 @@
             });
         }
 
+// Automatische posterwissel voor de kerstperiode (8 november t/m 1 januari)
+const muurPoster = document.getElementById('muur-poster');
+
+if (muurPoster) {
+    const vandaag = new Date();
+    const huidigeMaand = vandaag.getMonth() + 1; // Januari = 1
+    const huidigeDag = vandaag.getDate();
+    
+    // Logica voor de nieuwe periode:
+    // - November (11) vanaf dag 8
+    // - December (12) de hele maand
+    // - Januari (1) alleen op dag 1
+    const isKerstPeriode = 
+        (huidigeMaand === 11 && huidigeDag >= 8) || 
+        (huidigeMaand === 12) || 
+        (huidigeMaand === 1 && huidigeDag === 1);
+
+    if (isKerstPeriode) {
+        // HIER DE LINK NAAR JE KERSTPOSTER ZETTEN (vergeet &raw=1 niet!)
+        muurPoster.src = "https://www.dropbox.com/scl/fi/aru2rzi6a6u1cyrjrcqgh/winter-poster-donker.png?rlkey=6gdgc8301vn94infmrc9zrnog&st=ew4zrggt&raw=1";
+    } else {
+        // De normale poster
+        muurPoster.src = "https://www.dropbox.com/scl/fi/31fr5ik18pdbud649ccxi/MBFM-Poster-Donker.png?rlkey=pl5jcks5ji9sbs7tzhsjie4mg&st=t56w3qpw&raw=1";
+    }
+}
         // ========================================================
         // GOOGLE CAST & ACHTERGROND VEILIGHEID
         // ========================================================
