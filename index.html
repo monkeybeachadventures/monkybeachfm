@@ -6,93 +6,120 @@
     <title>Monkey Beach FM</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        /* HET TROPISCHE DESIGN VAN JOUW RADIOSTATION */
-        body {
+        /* FULLSCREEN TROPISCHE INTERFACE */
+        html, body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace; /* Typmachine stijl voor de hele site */
+            background-color: #120a05;
+        }
+
+        /* De magische achtergrondafbeelding */
+        .scenery-container {
+            position: relative;
+            width: 100vw;
             height: 100vh;
+            background: url('https://www.dropbox.com/scl/fi/qms6n1x04bfkc8pmxcai0/site-visual-design.png?rlkey=nokkkd2zsvx59sqs4ojjm9s7j&st=uwabvw7z&raw=1') center center no-repeat;
+            background-size: contain;
+        }
+
+       /* 1A. HET DIGITALE DISPLAY VAN DE RADIO (TITEL + STATUS) */
+        .radio-display {
+            position: absolute;
+            top: 36%;          
+            left: 42%;      
+            transform: translate(-50%, -50%);
+            width: 18%;       
+            height: auto;       /* Veranderd van 8% naar auto zodat het vak flexibel meegroeit als er 2 regels zijn */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fce19a;
+            text-shadow: 0 0 8px rgba(252, 225, 154, 0.6);
+            box-sizing: border-box;
+        }
+
+        /* 1B. DE LOSSE OVERLAY VOOR DE ROUNDE PLAY-KNOP */
+        .radio-button-overlay {
+            position: absolute;
+            top: 54.45%; /* Positie van de knop (omhoog/omlaag) - staat nu los van de tekst! */
+            left: 36.15%;    /* Positie van de knop (links/rechts) */
+            transform: translate(-50%, -50%);
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            text-align: center;
-        }
-
-        .player-container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 320px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .logo {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            margin: 0 0 5px 0;
-            font-size: 1.8rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        h2 {
-            margin: 0 0 30px 0;
-            font-size: 1rem;
-            font-weight: 400;
-            opacity: 0.8;
-        }
-
-        .track-info {
-            background: rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            box-sizing: border-box;
+            /* border: 1px solid blue; */ /* Haal de /* weg om te zien waar de knop staat */
         }
 
         #track-title {
-            font-size: 1.1rem;
+            font-size: 1.1vw;   /* Ietsjes kleiner gezet zodat langere titels sneller passen */
             font-weight: bold;
             margin-bottom: 5px;
+            /* OUDE INSTELLINGEN WEGGEHAALD (nowrap en ellipsis) */
+            word-wrap: break-word; /* Zorgt dat extreem lange woorden netjes worden afgebroken */
+            line-height: 1.2;      /* Zorgt voor een mooie afstand tussen de twee regels tekst */
+            width: 100%;
         }
 
         #status {
-            font-size: 0.85rem;
-            opacity: 0.7;
+            font-size: 0.8vw;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* HISTORIE LIJST STYLING */
-        .history-container {
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 15px;
-            padding: 12px;
-            margin-bottom: 20px;
+        #play-btn {
+            background: rgba(240, 182, 97, 0.2);
+            border: 2px solid #f0b661;
+            color: #fce19a;
+            width: 2vw;
+            height: 2vw;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 0 0 10px rgba(240, 182, 97, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0; /* Marges zijn niet meer nodig door de losse koppeling */
+        }
+
+        
+
+        #play-btn:hover:not(:disabled) {
+            background: rgba(240, 182, 97, 0.4);
+            box-shadow: 0 0 15px rgba(240, 182, 97, 0.6);
+        }
+
+        /* 2. OVERLAY OP HET TYPMACINE BRIEFJE */
+        .typewriter-paper {
+            position: absolute;
+            top: 45%;
+            left: 71%;
+            transform: translate(-50%, -50%) rotate(5deg); /* Draait mee met de stand van het papier! */
+            width: 17%;
+            height: 18%;
+            box-sizing: border-box;
+            padding: 5px;
+            color: #3a2d22; /* Ouderwetse inkt-kleur */
             text-align: left;
-            font-size: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .history-title {
+            display: inline-block; /* Zorgt dat het vakje precies zo breed is als het woord zelf */
             font-weight: bold;
+            font-size: 0.9vw;
+            border-bottom: 1px dashed #3a2d22;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            opacity: 0.8;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
 
         .history-list {
@@ -102,222 +129,240 @@
         }
 
         .history-item {
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.75vw;
+            line-height: 1.3;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            opacity: 0.75;
+            margin-bottom: 4px;
+        }
+
+     /* 3. VERSTEKEN KNOPPEN IN HET OPENGESLAGEN BOEK */
+        .book-container {
+            position: absolute;
+            bottom: 8%;        /* Hoe ver de knoppen van de ONDERKANT van het scherm staan */
+            left: 49.3%;  /* Hoe ver de knoppen van de LINKERKANT van het scherm staan */
+            transform: translateX(-50%);
+            width: 25%;      /* De totale breedte die de twee kaders samen innemen */
+            height: 16%;       /* De hoogte van de kaders */
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 6px;
+            box-sizing: border-box;
+            /* border: 1px solid red; */ /* HULPLIJN: Haal de /* weg om te zien waar het vak nu staat */
         }
 
-        .history-item:last-child {
-            border-bottom: none;
+        /* De onzichtbare kaders die precies over de boekvlakken vallen */
+        .book-frame {
+            width: 46%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .history-item::before {
-            content: "•";
-            color: #f0b661;
-            font-weight: bold;
+        /* NIEUW: Geef de linkerpagina een lichte draai naar links */
+        .book-container .book-frame:nth-child(1) button {
+            transform: rotate(5.5deg);
         }
 
-        /* STANDAARD KNOPPEN STYLING (DAGMODUS BRUIN) */
-        .controls button, #install-btn, #cast-btn {
-            background: #82462a;
+        /* NIEUW: Geef de rechterpagina een lichte draai naar rechts */
+        .book-container .book-frame:nth-child(2) button {
+            transform: rotate(-4.5deg);
+        }
+
+        .book-frame button {
+            background: transparent;
             border: none;
-            color: #f0b661;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 50px;
+            width: 100%;
+            height: 100%;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s;
-        }
-
-        #install-btn, #cast-btn {
-            padding: 12px 24px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        #cast-btn {
-            display: inline-flex;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 0.9vw;
+            color: #2b4539; /* Vintage zeemansgroen/blauw */
+            text-transform: uppercase;
+            transition: transform 0.2s, color 0.2s;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
+            text-align: center; /* Zorgt dat de tekst netjes gecentreerd blijft na draaien */
+            padding: 10px;
         }
 
-        .controls button:hover, #install-btn:hover, #cast-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        /* Aangepaste hover: Alleen de kleur verandert, de tekst blijft strak en stil staan */
+        .book-container .book-frame:nth-child(1) button:hover {
+            color: #11221a;
+        }
+        .book-container .book-frame:nth-child(2) button:hover {
+            color: #11221a;
         }
 
-        .controls button:active, #install-btn:active, #cast-btn:active {
-            transform: scale(0.95);
+        /* Responsiviteits-aanpassing voor hele kleine schermen */
+        @media (max-aspect-ratio: 4/3) {
+            #track-title { font-size: 1.5vw; }
+            #play-btn { font-size: 1.3vw; }
+            .history-title { font-size: 1.2vw; }
+            .history-item { font-size: 1vw; }
+            .book-frame button { font-size: 1.2vw; }
         }
 
-        /* DE STYLING VOOR JOUW EILAND-NACHT */
-        body.nacht-modus {
-            background: linear-gradient(135deg, #0B132B, #1C2541, #3A506B);
+/* 4. POSITIE EN GROOTTE VAN DE POSTER */
+        .custom-poster {
+            position: absolute;
+            top: 6%;          /* Hoe ver de poster van de BOVENKANT van het scherm staat */
+            left: 48%;        /* Hoe ver de poster van de LINKERKANT van het scherm staat */
+            width: 5vw;       /* De breedte van de poster (schaalt mee met het scherm) */
+            height: auto;      /* De hoogte past zich automatisch aan om de verhouding te bewaren */
+            
+            /* Optioneel: Geeft een vintage retro schaduw alsof de poster echt op de muur zit */
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3); 
+            
+            /* Zorgt ervoor dat je niet per ongeluk de poster selecteert bij het klikken */
+            pointer-events: none; 
         }
 
-        body.nacht-modus .player-container {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        body.nacht-modus .controls button, 
-        body.nacht-modus #install-btn, 
-        body.nacht-modus #cast-btn {
-            background: #1C2541;
-            color: #5BC0BE;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        body.nacht-modus #theme-btn {
-            border: 1px solid rgba(91, 192, 190, 0.4) !important;
-            color: #5BC0BE !important;
-        }
-
-        body.nacht-modus .history-item::before {
-            color: #5BC0BE;
-        }
     </style>
 </head>
 <body>
 
-    <div class="player-container">
-        <div class="logo">
-            <img src="https://www.dropbox.com/scl/fi/ylv6eshe0zigzxw5f8p97/mbfm-logo.png?rlkey=iwup6qewkfilix8e6hvi4ixvu&st=c78h815d&raw=1" alt="Monkey Beach Logo" style="max-width: 100%; height: auto; border-radius: 20px; max-height: 120px; object-fit: contain;">
+    <div class="scenery-container">
+        
+       <!-- ELEMENT 1A: HET DIGITALE DISPLAY (TEKST) -->
+        <div class="radio-display">
+            <div id="track-title">Laden...</div>
+            <div id="status">KLIK PLAY</div>
         </div>
-        <h1>Monkey Beach FM</h1>
-        <h2>De soundtrack van jouw eilandavontuur</h2>
 
-        <button id="install-btn" onclick="installApp()">
-            📲 Installeer de Monkey Beach FM App
-        </button>
-
-        <button id="cast-btn" onclick="startCasting()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display: inline-block; vertical-align: middle;">
-                <path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 4.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-            </svg>
-            Stream Audio
-        </button>
-
-        <div style="margin-bottom: 20px;">
-            <button id="theme-btn" onclick="toggleEilandModus()" style="background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white; padding: 8px 16px; font-size: 0.85rem; font-weight: bold; border-radius: 50px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; width: auto; margin: 0 auto;">
-                🌙 Donkere-Modus inschakelen
+        <!-- ELEMENT 1B: DE LOSSE PLAY BUTTON -->
+        <div class="radio-button-overlay">
+            <button id="play-btn" onclick="togglePlay()" disabled>
+                <!-- Play Icoon (Driehoek) -->
+                <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 1.2vw; height: 1.2vw;">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
             </button>
         </div>
 
-        <div class="track-info">
-            <div id="track-title">Laden...</div>
-            <div id="status">Afspelen</div>
-        </div>
-
-        <!-- NIEUW: NU GEDRAAID HISTORIE LIJST -->
-        <div class="history-container" id="history-box" style="display: none;">
-            <div class="history-title">🕒 Net gedraaid</div>
+        <!-- ELEMENT 2: HET BRIEFJE IN DE TYPMACINE -->
+        <div class="typewriter-paper">
+            <div class="history-title">Zojuist Gedraaid:</div>
             <ul class="history-list" id="history-list">
-                <!-- Wordt dynamisch gevuld via JavaScript -->
+                <li class="history-item">.</li>
             </ul>
         </div>
 
-        <div class="controls">
-            <button id="play-btn" onclick="togglePlay()" disabled>Afspelen</button>
+        <!-- ELEMENT 3: HET OPENGESLAGEN BOEK ONDERIN -->
+        <div class="book-container">
+            <!-- Linker kader: App Download -->
+            <div class="book-frame">
+                <button id="install-btn" onclick="installApp()">
+                    Installeer de<br>Monkey Beach FM app
+                </button>
+            </div>
+           <!-- Rechter kader: Streamen / Casten -->
+            <div class="book-frame">
+                <button id="cast-btn" onclick="startCasting()">
+                    <!-- Het officiële Google Cast Icoon -->
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 1.5vw; height: 1.5vw; margin-bottom: 4px;">
+                        <path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 4.03 9 9h2c0-6.08-4.92-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    Stream<br>Audio
+                </button>
+            </div>
         </div>
+
+<!-- ELEMENT 4: DE POSTER AAN DE MUUR -->
+        <img src="https://www.dropbox.com/scl/fi/31fr5ik18pdbud649ccxi/MBFM-Poster-Donker.png?rlkey=pl5jcks5ji9sbs7tzhsjie4mg&st=ky4sodmd&raw=1" class="custom-poster" alt="Poster">
+
     </div>
 
     <audio id="audio-player"></audio>
 
     <script>
         // ========================================================
-        // 1. JOUW GEPROGRAMMEERDE AFSPREELIJST
+        // JOUW GEPROGRAMMEERDE AFSPREELIJST (Hetzelfde gebleven)
         // ========================================================
         const playlist = [
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd" },
-            { title: "Bontjie Stars - MaDiWoDo", url: "https://www.dropbox.com/scl/fi/pzm2uyvfwvrwt13bjoao5/Bontjie-Stars-Ma-Di-Wo-Do.mp3?rlkey=md2bbhcmk0zfaz7tci71elgy8&st=wg4djggy&raw=1", periode: "Middag" },
-            { title: "Brazil Carnival - Samba Moderno", url: "https://www.dropbox.com/scl/fi/rpqi35vki3iyo7sf4tzhj/Brazil-Carnival-Samba-Moderno.mp3?rlkey=0e2x52rsxixbnsky1yy8ero5z&st=yhb3qh9h&raw=1", periode: "Middag" },
-            { title: "Camila Cabello - Havana", url: "https://www.dropbox.com/scl/fi/rwpc7h17lrz4lw63ku28t/Camila-Cabello-Havana-ft.-Young-Thug-1940s-Era-Style-Cover.mp3?rlkey=y9ar06uw3722gk89d9wiqor85&st=j54hoijs&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Belspel", url: "https://www.dropbox.com/scl/fi/ke8zr722e3lu770j5lvbv/Belspel-de-schat-van-mb-deel1.mp3?rlkey=etsxjssr12xf1k3omku0c2y0o&st=7pmrywkk&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Belspel", url: "https://www.dropbox.com/scl/fi/56blqxem2nqd78klf3odu/Belspel-de-schat-van-mb-deel2.mp3?rlkey=d2hhf7ywc2dn3att0uvxca1xo&st=sshu14si&raw=1", periode: "Middag" },
-            { title: "Dario G - Carnaval de Paris", url: "https://www.dropbox.com/scl/fi/hr5rsidoq8bqha4omli8k/Carnaval-de-Paris-Radio-Mix-Dario-G.mp3?rlkey=1wfsmdlw5nj6ugxhf6h2j7kxx&st=8fjlhixl&raw=1", periode: "Middag" },
-            { title: "Buena Vista Social Club - Chan Chan", url: "https://www.dropbox.com/scl/fi/rw3kjghzi72p7zqrue2vh/Chan-Chan-Buena-Vista-Social-Club.mp3?rlkey=9d5pqvpetpntdmqd9q2azwp9c&st=cdc6c7sa&raw=1", periode: "Middag" },
-            { title: "Wham - Club Tropicana", url: "https://www.dropbox.com/scl/fi/52mrm2ulhgx56sl2kzrlk/Club-Tropicana-Wham.mp3?rlkey=qo5opuaff4lh80qkos4o7hx3e&st=ozmp4whe&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/4xnypjkb3n3le3lx9uib2/Daar-zijn-we-weer.mp3?rlkey=yx4p5nvbpxwreqk0avjla7chb&st=vk6wii7y&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/0vlkxpwh0349463bmxu53/dj-monkeys-taking-over.mp3?rlkey=fvmu54z5y0eehqriileh58t1k&st=oof3ndsx&raw=1", periode: "Middag" },
-            { title: "Don Omar - Danza Kuduro", url: "https://www.dropbox.com/scl/fi/04v5t91262jqb4sduryq9/Don-Omar-Danza-Kuduro-Orchestral-Afro-Soul-Cover-afrocores.mp3?rlkey=zwu402a4gcdfmcbteq0ake655&st=jmiw5fvc&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/20h4dtbz1on0qf7qtmypp/Hallo-Avonturiers-en-aapjes.mp3?rlkey=neu29380s8vuy2a2baub17lkr&st=ox08okip&raw=1", periode: "Middag" },
-            { title: "Eagels - Hotel California", url: "https://www.dropbox.com/scl/fi/hzx8ds1fm95zfhqkq9kzg/Hotel-California-Reggae-Acoustic-Cover-Island-Vibes-Session.mp3?rlkey=mz3m3j61zoiu075nekt3i9qz6&st=7tkh2jpn&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag" },
-            { title: "Eclipse - La Bamba", url: "https://www.dropbox.com/scl/fi/5nh9lj5vw6j0nzurafx0w/La-Bamba-Eclipse.mp3?rlkey=e9ckpkc00cojelewu3k4y9t47&st=3m81c703&raw=1", periode: "Middag" },
-            { title: "Los ninos de Sara - La Cubanita", url: "https://www.dropbox.com/scl/fi/vxrzthhpivho45yvwdij8/La-Cubanita-ibafj23HWeY.mp3?rlkey=xl4lg022bhbfdwrbjmyzkvdie&st=6z3ovoqn&raw=1", periode: "Middag" },
-            { title: "Celia Cruz- La Vida es un Carnaval", url: "https://www.dropbox.com/scl/fi/xijzq7jqmfcetsxdzby67/La-Vida-Es-Un-Carnaval-Celia-Cruz.mp3?rlkey=zyauehaqe22nfgpbjz8fsn8tb&st=shhwvzoc&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag" },
-            { title: "La Makana - Lose Karkiks", url: "https://www.dropbox.com/scl/fi/567sknvsbsniyf499k20k/Los-Karkik_s-Cheque-La-Makana-Video-Oficial.mp3?rlkey=yf26b8hcdueasg1bvgj4u5wbg&st=udx294dz&raw=1", periode: "Middag" },
-            { title: "Bob Synclaire - Love Generation", url: "https://www.dropbox.com/scl/fi/8sc47817lhxqtu58jskbs/Love-Generation-Radio-Edit.mp3?rlkey=wrt7jhylh82f14zns9p9o4zsx&st=emy576jw&raw=1", periode: "Middag" },
-            { title: "Marc Anthony - Vivir mi Vide Letra", url: "https://www.dropbox.com/scl/fi/rj0tce69px7rt7oxgk9oz/Marc-Anthony-Vivir-Mi-Vida-Letra-Lyrics.mp3?rlkey=9oef0bjb1iphybfnxmicbzpdr&st=ite2v8lb&raw=1", periode: "Middag" },
-            { title: "Ricky Martin - Maria", url: "https://www.dropbox.com/scl/fi/1v4eknfkw9mjqjuzjnlxa/Mar-a-Ricky-Martin.mp3?rlkey=a29yg9ghod2el3nrsb72rt7ea&st=gu5m858a&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM News Today", url: "https://www.dropbox.com/scl/fi/7p5882y4pss3e1e0vc1fh/Monkey-Beach-News-Today-with-sounds.mp3?rlkey=06j4trh5i7ygd06uo9hu4t7ox&st=ospw14en&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag" },
-            { title: "K3- Pina Colada", url: "https://www.dropbox.com/scl/fi/uc4st32anqnko1niixa7g/Pina-Colada-K3.mp3?rlkey=ck3b5euyr13rvhts8wdnao5pa&st=led52rvj&raw=1", periode: "Middag" },
-            { title: "Ray Barretto - Trompeta Y Trombon", url: "https://www.dropbox.com/scl/fi/pmocdt3trfw9oadmlsc1h/Ray-Barretto-Trompeta-y-Tromb-n-Visualizador-Oficial.mp3?rlkey=9j37tm69r6v2d7smnt2fcsh1x&st=hj60j4yg&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag" },
-            { title: "Ricky Martin - Livin la Vida Loca", url: "https://www.dropbox.com/scl/fi/lpkkxn4v1fqgzx32hmn2d/Ricky-Martin-Livin_-la-Vida-Loca-Spanish-Version-audio.mp3?rlkey=hd8zuugua0z31k2wgbel6f2ik&st=dpxt4rhl&raw=1", periode: "Middag" },
-            { title: "Shaggy ft Sting - Till A Mawnin", url: "https://www.dropbox.com/scl/fi/1pnseew7p6kea0kzvhpja/Shaggy-feat.-Sting-Til-A-Mawnin-Remix-Official-Music-Video.mp3?rlkey=2va4t21gzunmg3wffvyaj6hoe&st=lidju5jd&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag" },
-            { title: "Elvis Crespo - Suavemente", url: "https://www.dropbox.com/scl/fi/svgl9keps6pw8y24zmmw3/Suavemente-Elvis-Crespo.mp3?rlkey=5yq712w0wn68vmicjpdbm4jb5&st=zstwhhyd&raw=1", periode: "Middag" },
-            { title: "The Stepbeats - What is Love", url: "https://www.dropbox.com/scl/fi/ee0s4v0w9gqyti2wbr7p6/The-Step-Beats-What-Is-Love.mp3?rlkey=x3cv8w1aux4trez37jsjlpxmg&st=vbqabdnk&raw=1", periode: "Middag" },
-            { title: "Tono Rosario - Kulikitaka", url: "https://www.dropbox.com/scl/fi/7thqbad2l8ko9fg615b3j/To-o-Rosario-KULIKITAKA.mp3?rlkey=7751hl56v1l83ekeswrnrxhfz&st=1h6xdfj2&raw=1", periode: "Middag" },
-            { title: "Bobby Valentin - Tu Eres Mi Coco", url: "https://www.dropbox.com/scl/fi/o6snmq9d98u8txp0i2t8a/Tu-Eres-Mi-Coco-Bobby-Valentin-syDfeb43Xf0.mp3?rlkey=cvg3b87s02ha191s966bf9z7i&st=e08buvja&raw=1", periode: "Middag" },
-            { title: "Typhoon - De Kapitein Deel II", url: "https://www.dropbox.com/scl/fi/lrxbso8s6szltw10fjgwn/Typhoon-De-Kapitein-Deel-II.mp3?rlkey=wxc1d7uq3gaud6rsc3fkgsi60&st=eqf329ui&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Verkeersinformatie", url: "https://www.dropbox.com/scl/fi/7u1wgj5trbbjxc8q5fvst/verkeers-informatie.mp3?rlkey=c3jdou5d6iqt6g3alq3tey78w&st=00tqugjw&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "Middag" },
-            { title: "Shakira - Waka Waka", url: "https://www.dropbox.com/scl/fi/58qh3tmey7ve7z6ygda1w/Waka-Waka-Reggae-Cover.mp3?rlkey=mg3xjz3813lrlqzp6e85cf61i&st=m8uzvwn5&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Weer", url: "https://www.dropbox.com/scl/fi/ssux8nr61d4a0wi19oo0h/weer-bericht-1.mp3?rlkey=imq90ygrxkgi3m6ifavmborkp&st=xet36bsy&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/510m7v38rcgbasevf9j90/welkom-waar-je-ook-luisterd.mp3?rlkey=23sv8ffb4elbrr5h5xdl3wrdk&st=zn5d6mt4&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag" },
-            { title: "Dobler - Zullen We Maar Weer", url: "https://www.dropbox.com/scl/fi/56dbh5do3piw8tkfwgxha/Zullen-We-Maar-Weer...-Dobler.mp3?rlkey=u2li2podhhts2juxone7eqzfn&st=y3sct5zo&raw=1", periode: "Middag" },
-            { title: "Chennot Glenn SU - The Tale Of Monkey Beach", url: "https://www.dropbox.com/scl/fi/3l4lsbtl6b0o7t4ils5wf/Luister-je-nog-met-song.mp3?rlkey=8kog3sw1fpuuoi33i09xcfoo7&st=vcyrs6ee&raw=1", periode: "Middag" },
-            { title: "Chennot Glenn SU - The Tale Of Monkey Beach", url: "https://www.dropbox.com/scl/fi/fpsorn06t8k4f5rw8ynzb/Intervieuw-Chennot-Glenn-Su-met-song.mp3?rlkey=s81uq6i40v5xuifjf9z6zw6mu&st=k6aj8npe&raw=1", periode: "Middag" },
-            { title: "Chennot Glenn SU - The Tale Of Monkey Beach", url: "https://www.dropbox.com/scl/fi/q7o2zatyoxt5wmj1mpfrb/Eyy-Chennot-hier-met-song.mp3?rlkey=43coro11gm0ejc4jip0q4f9s6&st=gu24nggc&raw=1", periode: "Middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "altijd" },
-            { title: "Joy - Mooie Dag", url: "https://www.dropbox.com/scl/fi/dx85r9gi0iz9s4ecfh75o/Joy-Mooie-Dag-zin-in-Zapp.mp3?rlkey=v8zlgnb56bf7c40yqmud4o641&st=lltn3h8u&raw=1", periode: "Middag" },
-            { title: "K3 - De zomer van Oya LéLé", url: "https://www.dropbox.com/scl/fi/r7pevvhh50kllh0nic6yf/K3-De-zomer-van-Oya-l-l.mp3?rlkey=qhcy26crhargqxr6q3jahqnsa&st=087p8j01&raw=1", periode: "Middag" },
-            { title: "Shakira - Zoo", url: "https://www.dropbox.com/scl/fi/9m1cjqk6zm05ghoj72ply/Shakira-Zoo-From-Zootopia-2.mp3?rlkey=1wkzk9yl1tncg5iwgbwwca02u&st=qpc6x01r&raw=1", periode: "Middag" },
-            { title: "DJ Bobo - Chihuahua", url: "https://www.dropbox.com/scl/fi/crb0onbdko4r8h713kua7/DJ-BoBo-CHIHUAHUA-Official-Music-Video.mp3?rlkey=4im01lghuy20fo6df7f77mv2g&st=jr5d53nb&dl=0", periode: "Middag" },
-            { title: "Bob Marley & The Wailers - Could You Be Loved", url: "https://www.dropbox.com/scl/fi/wgaurmyqqjzr3k9kp1hke/Bob-Marley-The-Wailers-Could-You-Be-Loved-Official-Music-Video.mp3?rlkey=nciwy3im51lcbpmc16wx18mla&st=4t2we6dg&dl=0", periode: "Middag" },
-            { title: "Arrow - Hot Hot Hot", url: "https://www.dropbox.com/scl/fi/evultw0danr4ijqto0des/Arrow-Hot-Hot-Hot.mp3?rlkey=m3nc2cpxj7kat1ei6eufw4brq&st=kibcx4w5&dl=0", periode: "Middag" },
-            { title: "Buena Vista Social Club - Dos Gardenias", url: "https://www.dropbox.com/scl/fi/inlogf07vd658jwvvd4ii/Buena-Vista-Social-Club-Dos-Gardenias.mp3?rlkey=c5ybypyyka1ntnmaciobuqdjg&st=hdipp5gm&dl=0", periode: "Middag" },
-            { title: "Amitai kurtz - Motzart", url: "https://www.dropbox.com/scl/fi/asc97v1a9z78gx6o48zhp/amitai-kurtz-Motzart.wav?rlkey=ctmxikdojv0p3ll80jtvhkl5y&st=wx2f5kra&dl=0", periode: "middag" },
-            { title: "Amitai kurtz - Bach", url: "https://www.dropbox.com/scl/fi/k29dizu9z15zd3cd8wtyg/amitai-kurtz-Bach.wav?rlkey=tj2fv15rl5beh7pzer03kox2n&st=7i5s7465&dl=0", periode: "middag" },
-            { title: "Herencia De Grandes- Ya Borracho", url: "https://www.dropbox.com/scl/fi/fa58a8y6efah5kawjcdz3/Herencia-De-Grandes-Ya-Borracho.mp3?rlkey=oli5ezpl9ep25fqrbb71af4kg&st=q4tn0g5h&dl=0", periode: "avond" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/fk5yfowi6dzick8jiol6o/Goedenacht-met-soundscape.mp3?rlkey=yu7unr2pjh33hfxnfgvrrf56g&st=bstzebuy&raw=1", periode: "avond" },
-            { title: "Monkey Beach by Night", url: "https://www.dropbox.com/scl/fi/rn7skprd2flngjs4rl5sa/Ambiant-beach-at-night.mp4?rlkey=lxbgfpz6hryd35jsr8zznyoqh&st=412sto1j&raw=1", periode: "avond" },
-            { title: "Efteling - Pirana (Wachtrij) ", url: "https://www.dropbox.com/scl/fi/p1x6tz9xzdi2fvpdw9l2g/Pirana-wachtrij.mp3?rlkey=4d8zpdlij60qifrpc6l0z8eo5&st=lc8uen4y&raw=1", periode: "avond" },
-            { title: "Alistair Lindsay - Summer Air", url: "https://www.dropbox.com/scl/fi/5oe319abuilitjbe99zgz/Summer-Air.wma?rlkey=qdq2ztuyl13hzk0serq273qdc&st=bgcjklw8&raw=1", periode: "avond" },
-            { title: "Chennot Glenn SU - Palmwood Drift", url: "https://www.dropbox.com/scl/fi/1mlur56d4kft40r62ws68/Palmwood-Drift.mp3?rlkey=81d3aapeswjzg0ioqva6prg8r&st=lnaelxdi&raw=1", periode: "avond" },
-            { title: "Monkey Beach FM Weerbericht", url: "https://www.dropbox.com/scl/fi/unsbto8zgcuzz9b8s1q3o/Weerbericht-nacht.mp3?rlkey=uro3clseo02of53jhyyyw3sgl&st=v09fd9kj&raw=1", periode: "avond" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/8np9tqo8m0yyrj6s3ly0n/Ochtend-spraak-dj.mp3?rlkey=en1v8kev2r6eyqfqwr3fnckuo&st=n8u97fxi&dl=0", periode: "ochtend" },
-            { title: "Daddy Yankee - Gasolina", url: "https://www.dropbox.com/scl/fi/xi05lth5s1jwhmx72y09j/Daddy-Yankee-Gasolina-Video-Oficial.mp3?rlkey=w8mw0yjpip6qbgfa5itybik3n&st=gup5a8un&dl=0", periode: "middag" },
-            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/jtg7l8xhzafs0l2roi0oi/Radio-Tuning-sound-effect.mp3?rlkey=3a1zzjcxbk1h7p6hys67vb152&st=ek6oe39j&dl=0", periode: "altijd" },
-            { title: "Michael Jackson - Smooth Criminal", url: "https://www.dropbox.com/scl/fi/fhcgjmhnemymdpgwjwe2r/Smooth-Criminal-by-Michael-Jackson-as-if-it-was-reggae-Reggae-AI-Cover.mp3?rlkey=o2q123bpsnepojt5o7plc6tnu&st=yuf29nlv&dl=0", periode: "middag" },
-            { title: "The Beatles - Hey Jude", url: "https://www.dropbox.com/scl/fi/nn5is1rlu4anb9cyszblb/The-Beatles-Hey-Jude-Reggae-Style.mp3?rlkey=vlje9994r90brvcp2dofubvz3&st=5i72252n&dl=0", periode: "middag" },
-            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "altijd" },
-            { title: "Chennot Glenn Su - Palm Tide", url: "https://www.dropbox.com/scl/fi/5ng1zrfyuh7qx4bhvksh5/Palm-Tide.mp3?rlkey=z9dq06lrandipj1c6vs4ddlrr&st=vk5w668g&raw=1", periode: "avond" }
+             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd", specialePeriode: "normaal" },
+            { title: "Bontjie Stars - MaDiWoDo", url: "https://www.dropbox.com/scl/fi/pzm2uyvfwvrwt13bjoao5/Bontjie-Stars-Ma-Di-Wo-Do.mp3?rlkey=md2bbhcmk0zfaz7tci71elgy8&st=wg4djggy&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Brazil Carnival - Samba Moderno", url: "https://www.dropbox.com/scl/fi/rpqi35vki3iyo7sf4tzhj/Brazil-Carnival-Samba-Moderno.mp3?rlkey=0e2x52rsxixbnsky1yy8ero5z&st=yhb3qh9h&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Camila Cabello - Havana", url: "https://www.dropbox.com/scl/fi/rwpc7h17lrz4lw63ku28t/Camila-Cabello-Havana-ft.-Young-Thug-1940s-Era-Style-Cover.mp3?rlkey=y9ar06uw3722gk89d9wiqor85&st=j54hoijs&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Belspel", url: "https://www.dropbox.com/scl/fi/ke8zr722e3lu770j5lvbv/Belspel-de-schat-van-mb-deel1.mp3?rlkey=etsxjssr12xf1k3omku0c2y0o&st=7pmrywkk&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Belspel", url: "https://www.dropbox.com/scl/fi/56blqxem2nqd78klf3odu/Belspel-de-schat-van-mb-deel2.mp3?rlkey=d2hhf7ywc2dn3att0uvxca1xo&st=sshu14si&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Dario G - Carnaval de Paris", url: "https://www.dropbox.com/scl/fi/hr5rsidoq8bqha4omli8k/Carnaval-de-Paris-Radio-Mix-Dario-G.mp3?rlkey=1wfsmdlw5nj6ugxhf6h2j7kxx&st=8fjlhixl&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Buena Vista Social Club - Chan Chan", url: "https://www.dropbox.com/scl/fi/rw3kjghzi72p7zqrue2vh/Chan-Chan-Buena-Vista-Social-Club.mp3?rlkey=9d5pqvpetpntdmqd9q2azwp9c&st=cdc6c7sa&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Wham - Club Tropicana", url: "https://www.dropbox.com/scl/fi/52mrm2ulhgx56sl2kzrlk/Club-Tropicana-Wham.mp3?rlkey=qo5opuaff4lh80qkos4o7hx3e&st=ozmp4whe&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/4xnypjkb3n3le3lx9uib2/Daar-zijn-we-weer.mp3?rlkey=yx4p5nvbpxwreqk0avjla7chb&st=vk6wii7y&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/0vlkxpwh0349463bmxu53/dj-monkeys-taking-over.mp3?rlkey=fvmu54z5y0eehqriileh58t1k&st=oof3ndsx&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Don Omar - Danza Kuduro", url: "https://www.dropbox.com/scl/fi/04v5t91262jqb4sduryq9/Don-Omar-Danza-Kuduro-Orchestral-Afro-Soul-Cover-afrocores.mp3?rlkey=zwu402a4gcdfmcbteq0ake655&st=jmiw5fvc&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/20h4dtbz1on0qf7qtmypp/Hallo-Avonturiers-en-aapjes.mp3?rlkey=neu29380s8vuy2a2baub17lkr&st=ox08okip&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Eagels - Hotel California", url: "https://www.dropbox.com/scl/fi/hzx8ds1fm95zfhqkq9kzg/Hotel-California-Reggae-Acoustic-Cover-Island-Vibes-Session.mp3?rlkey=mz3m3j61zoiu075nekt3i9qz6&st=7tkh2jpn&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Eclipse - La Bamba", url: "https://www.dropbox.com/scl/fi/5nh9lj5vw6j0nzurafx0w/La-Bamba-Eclipse.mp3?rlkey=e9ckpkc00cojelewu3k4y9t47&st=3m81c703&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Los ninos de Sara - La Cubanita", url: "https://www.dropbox.com/scl/fi/vxrzthhpivho45yvwdij8/La-Cubanita-ibafj23HWeY.mp3?rlkey=xl4lg022bhbfdwrbjmyzkvdie&st=6z3ovoqn&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Celia Cruz- La Vida es un Carnaval", url: "https://www.dropbox.com/scl/fi/xijzq7jqmfcetsxdzby67/La-Vida-Es-Un-Carnaval-Celia-Cruz.mp3?rlkey=zyauehaqe22nfgpbjz8fsn8tb&st=shhwvzoc&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "La Makana - Lose Karkiks", url: "https://www.dropbox.com/scl/fi/567sknvsbsniyf499k20k/Los-Karkik_s-Cheque-La-Makana-Video-Oficial.mp3?rlkey=yf26b8hcdueasg1bvgj4u5wbg&st=udx294dz&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Bob Synclaire - Love Generation", url: "https://www.dropbox.com/scl/fi/8sc47817lhxqtu58jskbs/Love-Generation-Radio-Edit.mp3?rlkey=wrt7jhylh82f14zns9p9o4zsx&st=emy576jw&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Marc Anthony - Vivir mi Vide Letra", url: "https://www.dropbox.com/scl/fi/rj0tce69px7rt7oxgk9oz/Marc-Anthony-Vivir-Mi-Vida-Letra-Lyrics.mp3?rlkey=9oef0bjb1iphybfnxmicbzpdr&st=ite2v8lb&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Ricky Martin - Maria", url: "https://www.dropbox.com/scl/fi/1v4eknfkw9mjqjuzjnlxa/Mar-a-Ricky-Martin.mp3?rlkey=a29yg9ghod2el3nrsb72rt7ea&st=gu5m858a&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM News Today", url: "https://www.dropbox.com/scl/fi/7p5882y4pss3e1e0vc1fh/Monkey-Beach-News-Today-with-sounds.mp3?rlkey=06j4trh5i7ygd06uo9hu4t7ox&st=ospw14en&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "K3- Pina Colada", url: "https://www.dropbox.com/scl/fi/uc4st32anqnko1niixa7g/Pina-Colada-K3.mp3?rlkey=ck3b5euyr13rvhts8wdnao5pa&st=led52rvj&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Ray Barretto - Trompeta Y Trombon", url: "https://www.dropbox.com/scl/fi/pmocdt3trfw9oadmlsc1h/Ray-Barretto-Trompeta-y-Tromb-n-Visualizador-Oficial.mp3?rlkey=9j37tm69r6v2d7smnt2fcsh1x&st=hj60j4yg&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Ricky Martin - Livin la Vida Loca", url: "https://www.dropbox.com/scl/fi/lpkkxn4v1fqgzx32hmn2d/Ricky-Martin-Livin_-la-Vida-Loca-Spanish-Version-audio.mp3?rlkey=hd8zuugua0z31k2wgbel6f2ik&st=dpxt4rhl&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Shaggy ft Sting - Till A Mawnin", url: "https://www.dropbox.com/scl/fi/1pnseew7p6kea0kzvhpja/Shaggy-feat.-Sting-Til-A-Mawnin-Remix-Official-Music-Video.mp3?rlkey=2va4t21gzunmg3wffvyaj6hoe&st=lidju5jd&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Elvis Crespo - Suavemente", url: "https://www.dropbox.com/scl/fi/svgl9keps6pw8y24zmmw3/Suavemente-Elvis-Crespo.mp3?rlkey=5yq712w0wn68vmicjpdbm4jb5&st=zstwhhyd&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "The Stepbeats - What is Love", url: "https://www.dropbox.com/scl/fi/ee0s4v0w9gqyti2wbr7p6/The-Step-Beats-What-Is-Love.mp3?rlkey=x3cv8w1aux4trez37jsjlpxmg&st=vbqabdnk&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Tono Rosario - Kulikitaka", url: "https://www.dropbox.com/scl/fi/7thqbad2l8ko9fg615b3j/To-o-Rosario-KULIKITAKA.mp3?rlkey=7751hl56v1l83ekeswrnrxhfz&st=1h6xdfj2&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Bobby Valentin - Tu Eres Mi Coco", url: "https://www.dropbox.com/scl/fi/o6snmq9d98u8txp0i2t8a/Tu-Eres-Mi-Coco-Bobby-Valentin-syDfeb43Xf0.mp3?rlkey=cvg3b87s02ha191s966bf9z7i&st=e08buvja&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Typhoon - De Kapitein Deel II", url: "https://www.dropbox.com/scl/fi/lrxbso8s6szltw10fjgwn/Typhoon-De-Kapitein-Deel-II.mp3?rlkey=wxc1d7uq3gaud6rsc3fkgsi60&st=eqf329ui&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Verkeersinformatie", url: "https://www.dropbox.com/scl/fi/7u1wgj5trbbjxc8q5fvst/verkeers-informatie.mp3?rlkey=c3jdou5d6iqt6g3alq3tey78w&st=00tqugjw&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Shakira - Waka Waka", url: "https://www.dropbox.com/scl/fi/58qh3tmey7ve7z6ygda1w/Waka-Waka-Reggae-Cover.mp3?rlkey=mg3xjz3813lrlqzp6e85cf61i&st=m8uzvwn5&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Weer", url: "https://www.dropbox.com/scl/fi/ssux8nr61d4a0wi19oo0h/weer-bericht-1.mp3?rlkey=imq90ygrxkgi3m6ifavmborkp&st=xet36bsy&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/510m7v38rcgbasevf9j90/welkom-waar-je-ook-luisterd.mp3?rlkey=23sv8ffb4elbrr5h5xdl3wrdk&st=zn5d6mt4&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/ty8kwz3a14aq37s409ufv/Reclame-Blok-MBFM-V1.mp3?rlkey=3p48xm4wlbbbrsk7wviksdmps&st=xoyktsg4&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Dobler - Zullen We Maar Weer", url: "https://www.dropbox.com/scl/fi/56dbh5do3piw8tkfwgxha/Zullen-We-Maar-Weer...-Dobler.mp3?rlkey=u2li2podhhts2juxone7eqzfn&st=y3sct5zo&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Chennot Glenn SU - The Tale Of Monkey Beach", url: "https://www.dropbox.com/scl/fi/3l4lsbtl6b0o7t4ils5wf/Luister-je-nog-met-song.mp3?rlkey=8kog3sw1fpuuoi33i09xcfoo7&st=vcyrs6ee&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Chennot Glenn SU - The Tale Of Monkey Beach", url: "https://www.dropbox.com/scl/fi/fpsorn06t8k4f5rw8ynzb/Intervieuw-Chennot-Glenn-Su-met-song.mp3?rlkey=s81uq6i40v5xuifjf9z6zw6mu&st=k6aj8npe&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Chennot Glenn SU - The Tale Of Monkey Beach", url: "https://www.dropbox.com/scl/fi/q7o2zatyoxt5wmj1mpfrb/Eyy-Chennot-hier-met-song.mp3?rlkey=43coro11gm0ejc4jip0q4f9s6&st=gu24nggc&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "altijd", specialePeriode: "normaal" },
+            { title: "Joy - Mooie Dag", url: "https://www.dropbox.com/scl/fi/dx85r9gi0iz9s4ecfh75o/Joy-Mooie-Dag-zin-in-Zapp.mp3?rlkey=v8zlgnb56bf7c40yqmud4o641&st=lltn3h8u&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "K3 - De zomer van Oya LéLé", url: "https://www.dropbox.com/scl/fi/r7pevvhh50kllh0nic6yf/K3-De-zomer-van-Oya-l-l.mp3?rlkey=qhcy26crhargqxr6q3jahqnsa&st=087p8j01&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Shakira - Zoo", url: "https://www.dropbox.com/scl/fi/9m1cjqk6zm05ghoj72ply/Shakira-Zoo-From-Zootopia-2.mp3?rlkey=1wkzk9yl1tncg5iwgbwwca02u&st=qpc6x01r&raw=1", periode: "Middag", specialePeriode: "normaal" },
+            { title: "DJ Bobo - Chihuahua", url: "https://www.dropbox.com/scl/fi/crb0onbdko4r8h713kua7/DJ-BoBo-CHIHUAHUA-Official-Music-Video.mp3?rlkey=4im01lghuy20fo6df7f77mv2g&st=jr5d53nb&dl=0", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Bob Marley & The Wailers - Could You Be Loved", url: "https://www.dropbox.com/scl/fi/wgaurmyqqjzr3k9kp1hke/Bob-Marley-The-Wailers-Could-You-Be-Loved-Official-Music-Video.mp3?rlkey=nciwy3im51lcbpmc16wx18mla&st=4t2we6dg&dl=0", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Arrow - Hot Hot Hot", url: "https://www.dropbox.com/scl/fi/evultw0danr4ijqto0des/Arrow-Hot-Hot-Hot.mp3?rlkey=m3nc2cpxj7kat1ei6eufw4brq&st=kibcx4w5&dl=0", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Buena Vista Social Club - Dos Gardenias", url: "https://www.dropbox.com/scl/fi/inlogf07vd658jwvvd4ii/Buena-Vista-Social-Club-Dos-Gardenias.mp3?rlkey=c5ybypyyka1ntnmaciobuqdjg&st=hdipp5gm&dl=0", periode: "Middag", specialePeriode: "normaal" },
+            { title: "Amitai kurtz - Motzart", url: "https://www.dropbox.com/scl/fi/asc97v1a9z78gx6o48zhp/amitai-kurtz-Motzart.wav?rlkey=ctmxikdojv0p3ll80jtvhkl5y&st=wx2f5kra&dl=0", periode: "middag", specialePeriode: "normaal" },
+            { title: "Amitai kurtz - Bach", url: "https://www.dropbox.com/scl/fi/k29dizu9z15zd3cd8wtyg/amitai-kurtz-Bach.wav?rlkey=tj2fv15rl5beh7pzer03kox2n&st=7i5s7465&dl=0", periode: "middag", specialePeriode: "normaal" },
+            { title: "Herencia De Grandes- Ya Borracho", url: "https://www.dropbox.com/scl/fi/fa58a8y6efah5kawjcdz3/Herencia-De-Grandes-Ya-Borracho.mp3?rlkey=oli5ezpl9ep25fqrbb71af4kg&st=q4tn0g5h&dl=0", periode: "avond", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/fk5yfowi6dzick8jiol6o/Goedenacht-met-soundscape.mp3?rlkey=yu7unr2pjh33hfxnfgvrrf56g&st=bstzebuy&raw=1", periode: "avond", specialePeriode: "normaal" },
+            { title: "Monkey Beach by Night", url: "https://www.dropbox.com/scl/fi/rn7skprd2flngjs4rl5sa/Ambiant-beach-at-night.mp4?rlkey=lxbgfpz6hryd35jsr8zznyoqh&st=412sto1j&raw=1", periode: "avond", specialePeriode: "normaal" },
+            { title: "Efteling - Pirana (Wachtrij) ", url: "https://www.dropbox.com/scl/fi/p1x6tz9xzdi2fvpdw9l2g/Pirana-wachtrij.mp3?rlkey=4d8zpdlij60qifrpc6l0z8eo5&st=lc8uen4y&raw=1", periode: "avond", specialePeriode: "normaal" },
+            { title: "Alistair Lindsay - Summer Air", url: "https://www.dropbox.com/scl/fi/5oe319abuilitjbe99zgz/Summer-Air.wma?rlkey=qdq2ztuyl13hzk0serq273qdc&st=bgcjklw8&raw=1", periode: "avond", specialePeriode: "normaal" },
+            { title: "Chennot Glenn SU - Palmwood Drift", url: "https://www.dropbox.com/scl/fi/1mlur56d4kft40r62ws68/Palmwood-Drift.mp3?rlkey=81d3aapeswjzg0ioqva6prg8r&st=lnaelxdi&raw=1", periode: "avond", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Weerbericht", url: "https://www.dropbox.com/scl/fi/unsbto8zgcuzz9b8s1q3o/Weerbericht-nacht.mp3?rlkey=uro3clseo02of53jhyyyw3sgl&st=v09fd9kj&raw=1", periode: "avond", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/8np9tqo8m0yyrj6s3ly0n/Ochtend-spraak-dj.mp3?rlkey=en1v8kev2r6eyqfqwr3fnckuo&st=n8u97fxi&dl=0", periode: "ochtend", specialePeriode: "normaal" },
+            { title: "Daddy Yankee - Gasolina", url: "https://www.dropbox.com/scl/fi/xi05lth5s1jwhmx72y09j/Daddy-Yankee-Gasolina-Video-Oficial.mp3?rlkey=w8mw0yjpip6qbgfa5itybik3n&st=gup5a8un&dl=0", periode: "middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/jtg7l8xhzafs0l2roi0oi/Radio-Tuning-sound-effect.mp3?rlkey=3a1zzjcxbk1h7p6hys67vb152&st=ek6oe39j&dl=0", periode: "altijd", specialePeriode: "normaal" },
+            { title: "Michael Jackson - Smooth Criminal", url: "https://www.dropbox.com/scl/fi/fhcgjmhnemymdpgwjwe2r/Smooth-Criminal-by-Michael-Jackson-as-if-it-was-reggae-Reggae-AI-Cover.mp3?rlkey=o2q123bpsnepojt5o7plc6tnu&st=yuf29nlv&dl=0", periode: "middag", specialePeriode: "normaal" },
+            { title: "The Beatles - Hey Jude", url: "https://www.dropbox.com/scl/fi/nn5is1rlu4anb9cyszblb/The-Beatles-Hey-Jude-Reggae-Style.mp3?rlkey=vlje9994r90brvcp2dofubvz3&st=5i72252n&dl=0", periode: "middag", specialePeriode: "normaal" },
+            { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "altijd", specialePeriode: "normaal" },
+            { title: "Chennot Glenn Su - Palm Tide", url: "https://www.dropbox.com/scl/fi/5ng1zrfyuh7qx4bhvksh5/Palm-Tide.mp3?rlkey=z9dq06lrandipj1c6vs4ddlrr&st=vk5w668g&raw=1", periode: "avond", specialePeriode: "normaal" }
         ];
 
         // ========================================================
-        // 2. TIMING EN GEPROGRAMMEERDE AFSPREEL-LOGICA
+        // SPELER EN SLIMME LOGICA (MET KALENDER + GESCHIEDENIS)
         // ========================================================
         const audioPlayer = document.getElementById('audio-player');
         const playBtn = document.getElementById('play-btn');
@@ -326,11 +371,10 @@
 
         let isPlaying = false;
         let backgroundAudioCtx = null;
-        
         let vorigNummerUrl = ""; 
         let errorTimeout = null;
-        let afspeelGeschiedenis = []; // Slaat de geschiedenis op van gedraaide URL's
-        let gedraaideTracksNamen = []; // Slaat de titels op voor de visualisatie in de geschiedenis
+        let afspeelGeschiedenis = []; 
+        let gedraaideTracksNamen = []; 
 
         audioPlayer.preload = "auto";
 
@@ -347,30 +391,36 @@
                 } else if (backgroundAudioCtx.state === 'suspended') {
                     backgroundAudioCtx.resume();
                 }
-            } catch(e) {
-                console.log("Hack kon niet starten:", e);
-            }
+            } catch(e) {}
         }
 
-        // SLIMMERE RANDOM FUNCTIE DIE DE LAATSTE 8 NUMMERS ONTHOUDT
         function getRandomTrack() {
-            const huidigUur = new Date().getHours();
-            let huidigePeriode = "altijd";
+            const nu = new Date();
+            const maand = nu.getMonth() + 1;
+            const dag = nu.getDate();
+            const huidigUur = nu.getHours();
+            
+            let actiefSeizoen = "normaal";
+            if (maand === 10 && dag >= 25) actiefSeizoen = "halloween";
+            else if (maand === 12) actiefSeizoen = "kerst";
 
-            if (huidigUur >= 4 && huidigUur < 5) {
-                huidigePeriode = "ochtend"; 
-            } else if (huidigUur >= 5 && huidigUur < 23) {
-                huidigePeriode = "middag";  
-            } else {
-                huidigePeriode = "avond";   
-            }
+            let huidigePeriode = "altijd";
+            if (huidigUur >= 4 && huidigUur < 5) huidigePeriode = "ochtend"; 
+            else if (huidigUur >= 5 && huidigUur < 23) huidigePeriode = "middag";  
+            else huidigePeriode = "avond";   
 
             const gefilterdeLijst = playlist.filter(track => {
-                return track.periode.toLowerCase() === huidigePeriode.toLowerCase() || track.periode.toLowerCase() === "altijd";
+                const pastBijTijd = (track.periode.toLowerCase() === huidigePeriode.toLowerCase() || track.periode.toLowerCase() === "altijd");
+                let pastBijSeizoen = false;
+                if (actiefSeizoen === "normaal") {
+                    pastBijSeizoen = (track.specialePeriode === "normaal" || !track.specialePeriode);
+                } else {
+                    pastBijSeizoen = (track.specialePeriode === "normaal" || !track.specialePeriode || track.specialePeriode === actiefSeizoen);
+                }
+                return pastBijTijd && pastBijSeizoen;
             });
 
             const uiteindelijkeLijst = gefilterdeLijst.length > 0 ? gefilterdeLijst : playlist;
-
             const geschiedenisLimiet = Math.min(8, Math.floor(uiteindelijkeLijst.length / 2));
 
             let gekozenTrack;
@@ -382,92 +432,62 @@
                 pogingen++;
             } while (afspeelGeschiedenis.includes(gekozenTrack.url) && pogingen < 40);
 
-            // Voeg de track toe aan de geschiedenis
             afspeelGeschiedenis.push(gekozenTrack.url);
-
-            // Verwijder het oudste nummer als we boven de limiet komen
-            if (afspeelGeschiedenis.length > geschiedenisLimiet) {
-                afspeelGeschiedenis.shift();
-            }
+            if (afspeelGeschiedenis.length > geschiedenisLimiet) afspeelGeschiedenis.shift();
 
             return gekozenTrack;
         }
 
-        // UPDATE DE VISUELE GESCHIEDENIS OP HET SCHERM
         function updateGeschiedenisLijst(nieuweAfgelopenTrackTitel) {
-            // Voorkom jingles en reclames in de visuele historie voor een rustiger beeld (optioneel)
-            if (nieuweAfgelopenTrackTitel.includes("Monkey Beach FM") || nieuweAfgelopenTrackTitel.toLowerCase().includes("reclame")) {
-                return; 
-            }
+            if (nieuweAfgelopenTrackTitel.includes("Monkey Beach FM") || nieuweAfgelopenTrackTitel.toLowerCase().includes("reclame")) return; 
 
-            // Voeg de zojuist afgelopen track toe aan de visuele lijst
             gedraaideTracksNamen.unshift(nieuweAfgelopenTrackTitel);
+            if (gedraaideTracksNamen.length > 4) gedraaideTracksNamen.pop(); // Max 4 op het briefje
 
-            // Behoud maximaal 3 tracks in de lijst
-            if (gedraaideTracksNamen.length > 3) {
-                gedraaideTracksNamen.pop();
-            }
-
-            const historyBox = document.getElementById('history-box');
             const historyList = document.getElementById('history-list');
-
-            // Maak de lijst leeg en bouw hem opnieuw op
             historyList.innerHTML = "";
+            
             gedraaideTracksNamen.forEach(titel => {
                 const li = document.createElement('li');
                 li.className = "history-item";
-                li.innerText = titel;
+                li.innerText = "- " + titel;
                 historyList.appendChild(li);
             });
-
-            // Toon de box zodra er minimaal 1 nummer in staat
-            if (gedraaideTracksNamen.length > 0) {
-                historyBox.style.display = "block";
-            }
         }
 
         function playRandomTrack() {
             if (playlist.length === 0) return;
 
-            // Haal de titel op van het nummer dat NU stopt met spelen (als dat er was)
             const afgelopenTrackTitel = trackTitle.innerText;
             if (afgelopenTrackTitel && afgelopenTrackTitel !== "Laden..." && afgelopenTrackTitel !== "Monkey Beach FM") {
                 updateGeschiedenisLijst(afgelopenTrackTitel);
             }
 
-            if (errorTimeout) {
-                clearTimeout(errorTimeout);
-                errorTimeout = null;
-            }
+            if (errorTimeout) clearTimeout(errorTimeout);
 
             const currentTrack = getRandomTrack();
             vorigNummerUrl = currentTrack.url; 
 
-            let streamUrl = currentTrack.url.replace("dl=0", "raw=1");
-            audioPlayer.src = streamUrl;
+            audioPlayer.src = currentTrack.url.replace("dl=0", "raw=1");
             trackTitle.innerText = currentTrack.title;
-            statusDisplay.innerText = "Volgende nummer laden...";
+            statusDisplay.innerText = "Laden...";
 
             audioPlayer.load();
 
             if (isPlaying) {
-                let playPromise = audioPlayer.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        statusDisplay.innerText = "Nu aan het afspelen";
-                        activeerWakeLock();
-                        updateMediaSession(currentTrack);
-                    }).catch(error => {
-                        console.log("Dropbox dip, herstarten...", error);
-                        if (document.visibilityState === 'visible') {
-                            errorTimeout = setTimeout(playRandomTrack, 2000);
-                        }
-                    });
-                }
+                audioPlayer.play().then(() => {
+                    statusDisplay.innerText = "ON AIR";
+                    activeerWakeLock();
+                    updateMediaSession(currentTrack);
+                }).catch(() => {
+                    if (document.visibilityState === 'visible') {
+                        errorTimeout = setTimeout(playRandomTrack, 2000);
+                    }
+                });
             }
         }
 
-        function togglePlay() {
+   function togglePlay() {
             startAchtergrondAudioHack();
 
             if (vorigNummerUrl === "") {
@@ -480,105 +500,75 @@
 
             if (isPlaying) {
                 audioPlayer.pause();
-                playBtn.innerText = "Afspelen";
-                statusDisplay.innerText = "Gepauzeerd";
+                // Zet het Play-icoon (Driehoek) terug
+                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 1.2vw; height: 1.2vw;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+                playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 1.2vw; height: 1.2vw;"><path d="M8 5v14l11-7z"/></svg>`;
+                statusDisplay.innerText = "PAUSE";
                 isPlaying = false;
                 stopWakeLock();
             } else {
-                statusDisplay.innerText = "Verbinden...";
+                statusDisplay.innerText = "CONNECTING";
                 audioPlayer.play().then(() => {
-                    playBtn.innerText = "Stop";
-                    statusDisplay.innerText = "Nu aan het afspelen";
+                    // Verander naar het Pause-icoon (Twee streepjes)
+                    playBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 1.2vw; height: 1.2vw;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+                    statusDisplay.innerText = "ON AIR";
                     isPlaying = true;
                     activeerWakeLock();
-                    
                     const huidigeTrack = playlist.find(t => t.url === vorigNummerUrl) || playlist[0];
                     updateMediaSession(huidigeTrack);
-                }).catch(error => {
-                    console.log("Afspeelfout bij klik, proberen we opnieuw:", error);
+                }).catch(() => {
                     isPlaying = true; 
                     playRandomTrack();
                 });
             }
         }
 
-        audioPlayer.onended = function() {
-            statusDisplay.innerText = "Volgend nummer kiezen...";
-            playRandomTrack();
-        };
-
+        audioPlayer.onended = function() { playRandomTrack(); };
         audioPlayer.onerror = function() {
-            console.log("Audio-fout opgetreden, herstellen...");
-            statusDisplay.innerText = "Verbinding herstellen...";
+            statusDisplay.innerText = "RECONNECTING";
             if (errorTimeout) clearTimeout(errorTimeout);
-            
             if (document.visibilityState === 'visible' && isPlaying) {
                 errorTimeout = setTimeout(playRandomTrack, 2000);
             }
         };
 
-       window.onload = function() {
-    if(playlist.length > 0) {
-        trackTitle.innerText = "Monkey Beach FM";
-        statusDisplay.innerText = "Klik op afspelen om te beginnen";
-        playBtn.disabled = false;
-        playBtn.innerText = "Afspelen";
-    }
-    laadGoogleCastVeilig(); 
-};
+        window.onload = function() {
+            if(playlist.length > 0) {
+                trackTitle.innerText = "Monkey Beach FM";
+                statusDisplay.innerText = "KLIK PLAY";
+                playBtn.disabled = false;
+            }
+            laadGoogleCastVeilig(); 
+        };
 
         // ========================================================
-        // 3. CODE VOOR DE APP-INSTALLATIE KNOP
+        // APP-INSTALLATIE LOGICA
         // ========================================================
         let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
-
-        function controleerAppModus() {
-            const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-            if (isPWA) {
-                installBtn.style.display = 'none';
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', controleerAppModus);
-
         window.addEventListener('beforeinstallprompt', (e) => {
-            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-                installBtn.style.display = 'none';
-                return;
-            }
             e.preventDefault();
             deferredPrompt = e;
-            installBtn.style.display = 'inline-block';
         });
 
         function installApp() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        installBtn.style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                });
+                deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
             } else {
-                alert("Hoe te installeren:\n\n• iPhone (Safari): Tik onderin op de Deel-knop en kies 'Zet op beginscherm'.\n\n• Android: Tik rechtsboven op de 3 stipjes en kies 'App installeren'.");
+                alert("Monkey Beach FM App Installatie:\n\n• iPhone (Safari): Tik onderin op 'Deel' en kies 'Zet op beginscherm'.\n\n• Android: Tik rechtsboven op de 3 stipjes en kies 'App installeren'.");
             }
         }
 
         if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/monkeybeachfm/sw.js', { scope: '/monkeybeachfm/' })
-        .then(() => console.log("Service Worker succesvol geregistreerd voor GitHub!"))
-        .catch(err => console.log("SW fout:", err));
-    });
-}
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/monkeybeachfm/sw.js', { scope: '/monkeybeachfm/' });
+            });
+        }
 
         // ========================================================
-        // 4. GOOGLE CAST LOGICA
+        // GOOGLE CAST & ACHTERGROND VEILIGHEID
         // ========================================================
         let castSession = null;
-
         function laadGoogleCastVeilig() {
             const script = document.createElement('script');
             script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
@@ -595,7 +585,6 @@
                 receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
                 autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGINAL_SCOPED
             });
-
             context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, (event) => {
                 if (event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
                     castSession = context.getCurrentSession();
@@ -617,7 +606,7 @@
                     if(huidigeTrack) castMedia(huidigeTrack);
                 }
                 else playRandomTrack();
-            }).catch(err => console.log(err));
+            });
         }
 
         function castMedia(track) {
@@ -628,42 +617,22 @@
             mediaInfo.metadata.title = track.title;
             mediaInfo.metadata.artist = "Monkey Beach FM";
             const request = new chrome.cast.media.LoadRequest(mediaInfo);
-            castSession.getSessionObj().loadMedia(request, () => {}, err => console.log(err));
+            castSession.getSessionObj().loadMedia(request, () => {}, () => {});
         }
 
-        // ========================================================
-        // 5. ACHTERGROND & AUDIO STABILITEIT
-        // ========================================================
         let wakeLock = null;
-
         async function activeerWakeLock() {
-            try {
-                if ('wakeLock' in navigator) {
-                    wakeLock = await navigator.wakeLock.request('screen');
-                }
-            } catch (err) {
-                console.log('Wake Lock mislukt:', err.message);
-            }
+            try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {}
         }
-
-        function stopWakeLock() {
-            if (wakeLock !== null) {
-                wakeLock.release();
-                wakeLock = null;
-            }
-        }
+        function stopWakeLock() { if (wakeLock !== null) { wakeLock.release(); wakeLock = null; } }
 
         function updateMediaSession(track) {
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: track.title,
                     artist: 'Monkey Beach FM',
-                    album: 'Tropische Radio',
-                    artwork: [
-                        { src: 'https://www.dropbox.com/scl/fi/ylv6eshe0zigzxw5f8p97/mbfm-logo.png?rlkey=iwup6qewkfilix8e6hvi4ixvu&st=c78h815d&raw=1', sizes: '512x512', type: 'image/png' }
-                    ]
+                    album: 'Tropische Radio'
                 });
-
                 navigator.mediaSession.setActionHandler('nexttrack', () => { playRandomTrack(); });
                 navigator.mediaSession.setActionHandler('play', () => { togglePlay(); });
                 navigator.mediaSession.setActionHandler('pause', () => { togglePlay(); });
@@ -674,45 +643,7 @@
             if (document.visibilityState === 'visible' && isPlaying) {
                 activeerWakeLock();
                 startAchtergrondAudioHack();
-                if (audioPlayer.paused && isPlaying) {
-                    playRandomTrack();
-                }
-            }
-        });
-
-        function updateGroet() {
-            const uur = new Date().getHours();
-            const ondertitel = document.querySelector('h2');
-            if (uur >= 6 && uur < 12) ondertitel.innerText = "Goedemorgen! Start je dag tropisch met Monkey Beach FM! ☀️";
-            else if (uur >= 12 && uur < 18) ondertitel.innerText = "Fijne middag! Monkey Beach FM, De soundtrack van jouw eilandavontuur 🌴";
-            else if (uur >= 18 && uur < 24) ondertitel.innerText = "Goedenavond! Geniet van je avond met Monkey Beach FM 🍹";
-            else ondertitel.innerText = "Geniet van de wondere nacht op dit magische eiland met Monkey Beach FM 🌙";
-        }
-        window.addEventListener('DOMContentLoaded', updateGroet);
-
-        // ========================================================
-        // 6. EILAND-MODUS (NACHTMODUS) LOGICA
-        // ========================================================
-        const themeBtn = document.getElementById('theme-btn');
-
-        function toggleEilandModus() {
-            document.body.classList.toggle('nacht-modus');
-            const isNacht = document.body.classList.contains('nacht-modus');
-            
-            if (isNacht) {
-                themeBtn.innerHTML = "☀️ Dag-Modus inschakelen";
-                localStorage.setItem('eiland-thema', 'nacht');
-            } else {
-                themeBtn.innerHTML = "🌙 Donkere-Modus inschakelen";
-                localStorage.setItem('eiland-thema', 'dag');
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const opgeslagenThema = localStorage.getItem('eiland-thema');
-            if (opgeslagenThema === 'nacht') {
-                document.body.classList.add('nacht-modus');
-                themeBtn.innerHTML = "☀️ Dag-Modus inschakelen";
+                if (audioPlayer.paused && isPlaying) playRandomTrack();
             }
         });
     </script>
