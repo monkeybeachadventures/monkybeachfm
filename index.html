@@ -244,7 +244,7 @@
             position: absolute;
             /* --- POSITIE: Schuif hiermee de vlam precies op het lontje --- */
             top: 54.9%;          /* Hoe ver van de bovenkant */
-            left: 17%;         /* Hoe ver van de linkerkant */
+            left: 17.2%;         /* Hoe ver van de linkerkant */
             transform: translate(-50%, -50%);
             
             /* --- VORM EN KLEUR VAN DE VLAM --- */
@@ -312,12 +312,12 @@
             <!-- Linker kader: App Download -->
             <div class="book-frame">
                 <button id="install-btn" onclick="installApp()">
-                    Installeer de<br>Monkey Beach FM app
+                    .<br>.
                 </button>
             </div>
            <!-- Rechter kader: Streamen / Casten -->
             <div class="book-frame">
-                <button id="cast-btn" onclick="startCasting()">
+                <button onclick="startCasting()"
                     <!-- Het officiële Google Cast Icoon -->
                     <svg viewBox="0 0 24 24" fill="currentColor" style="width: 1.5vw; height: 1.5vw; margin-bottom: 4px;">
                         <path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 4.03 9 9h2c0-6.08-4.92-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
@@ -402,10 +402,12 @@
             { title: "Buena Vista Social Club - Dos Gardenias", url: "https://www.dropbox.com/scl/fi/inlogf07vd658jwvvd4ii/Buena-Vista-Social-Club-Dos-Gardenias.mp3?rlkey=c5ybypyyka1ntnmaciobuqdjg&st=hdipp5gm&dl=0", periode: "Middag", specialePeriode: "normaal" },
             { title: "Herencia De Grandes- Ya Borracho", url: "https://www.dropbox.com/scl/fi/fa58a8y6efah5kawjcdz3/Herencia-De-Grandes-Ya-Borracho.mp3?rlkey=oli5ezpl9ep25fqrbb71af4kg&st=q4tn0g5h&dl=0", periode: "avond", specialePeriode: "normaal" },
             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/ulw2g67gw2irle9onpxb8/JIngle-with-music-v1.mp3?rlkey=6bhd75d9afa43ngqaod4t801m&st=3lvfhgy9&raw=1", periode: "altijd", specialePeriode: "normaal" },
+{ title: "Klangkarussell - Sonnentanz", url: "https://www.dropbox.com/scl/fi/k3v3u6nbz809jc6md2bf7/Klangkarussell-Sonnentanz-Video-HD.mp3?rlkey=ar18uei0r0cm1zbxvozvqj2or&st=kcezbtc4&dl=0", periode: "altijd", specialePeriode: "normaal" },
             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/fk5yfowi6dzick8jiol6o/Goedenacht-met-soundscape.mp3?rlkey=yu7unr2pjh33hfxnfgvrrf56g&st=bstzebuy&raw=1", periode: "avond", specialePeriode: "normaal" },
             { title: "Monkey Beach by Night", url: "https://www.dropbox.com/scl/fi/rn7skprd2flngjs4rl5sa/Ambiant-beach-at-night.mp4?rlkey=lxbgfpz6hryd35jsr8zznyoqh&st=412sto1j&raw=1", periode: "avond", specialePeriode: "normaal" },
             { title: "Efteling - Pirana (Wachtrij) ", url: "https://www.dropbox.com/scl/fi/p1x6tz9xzdi2fvpdw9l2g/Pirana-wachtrij.mp3?rlkey=4d8zpdlij60qifrpc6l0z8eo5&st=lc8uen4y&raw=1", periode: "avond", specialePeriode: "normaal" },
             { title: "Alistair Lindsay - Summer Air", url: "https://www.dropbox.com/scl/fi/5oe319abuilitjbe99zgz/Summer-Air.wma?rlkey=qdq2ztuyl13hzk0serq273qdc&st=bgcjklw8&raw=1", periode: "avond", specialePeriode: "normaal" },
+{ title: "Herencia De Grandes - Ya Borracho", url: "https://www.dropbox.com/scl/fi/zrhmcj5xjtyrqj90bwx31/Herencia-De-Grandes-Ya-Borracho.mp3?rlkey=ltmsgbowsmw07r8imwo8o2qmu&st=v9ogm09v&raw=1", periode: "avond", specialePeriode: "normaal" },
             { title: "Chennot Glenn SU - Palmwood Drift", url: "https://www.dropbox.com/scl/fi/1mlur56d4kft40r62ws68/Palmwood-Drift.mp3?rlkey=81d3aapeswjzg0ioqva6prg8r&st=lnaelxdi&raw=1", periode: "avond", specialePeriode: "normaal" },
             { title: "Monkey Beach FM Weerbericht", url: "https://www.dropbox.com/scl/fi/unsbto8zgcuzz9b8s1q3o/Weerbericht-nacht.mp3?rlkey=uro3clseo02of53jhyyyw3sgl&st=v09fd9kj&raw=1", periode: "avond", specialePeriode: "normaal" },
             { title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/8np9tqo8m0yyrj6s3ly0n/Ochtend-spraak-dj.mp3?rlkey=en1v8kev2r6eyqfqwr3fnckuo&st=n8u97fxi&dl=0", periode: "ochtend", specialePeriode: "normaal" },
@@ -414,23 +416,35 @@
             { title: "Michael Jackson - Smooth Criminal", url: "https://www.dropbox.com/scl/fi/fhcgjmhnemymdpgwjwe2r/Smooth-Criminal-by-Michael-Jackson-as-if-it-was-reggae-Reggae-AI-Cover.mp3?rlkey=o2q123bpsnepojt5o7plc6tnu&st=yuf29nlv&dl=0", periode: "middag", specialePeriode: "normaal" },
             { title: "The Beatles - Hey Jude", url: "https://www.dropbox.com/scl/fi/nn5is1rlu4anb9cyszblb/The-Beatles-Hey-Jude-Reggae-Style.mp3?rlkey=vlje9994r90brvcp2dofubvz3&st=5i72252n&dl=0", periode: "middag", specialePeriode: "normaal" },
             { title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/nbeaosqoy1otuzhpj2ih6/Reclame-Blok-MBFM2.mp3?rlkey=pgdsni1xah84vwv252q7unqt5&st=x6jt6wly&dl=0", periode: "altijd", specialePeriode: "normaal" },
+{ title: "Daddy Yankee -  ¡Sacúdelo!", url: "https://www.dropbox.com/scl/fi/d3l6e535hjyq6tpukkwh6/Daddy-Yankee-Sac-delo.mp3?rlkey=2k6uy3jdaetaspkf3p56nm3pv&st=4uaguesn&raw=1", periode: "middag", specialePeriode: "normaal" },
             { title: "Chennot Glenn Su - Palm Tide", url: "https://www.dropbox.com/scl/fi/5ng1zrfyuh7qx4bhvksh5/Palm-Tide.mp3?rlkey=z9dq06lrandipj1c6vs4ddlrr&st=vk5w668g&raw=1", periode: "avond", specialePeriode: "normaal" },
 { title: "Daddy Yankee - Fuego én La Pista ", url: "https://www.dropbox.com/scl/fi/1qcibp2n2pe6q9l51vytr/Daddy-Yankee-x-Luis-Fonsi-Fuego-En-La-Pista-Official-lyrics-video.mp3?rlkey=86u0n6bv6aewh5j2mhgcewpyw&st=si0kvo0m&dl=0", periode: "altijd", specialePeriode: "normaal" },
 { title: "Monkey Beach FM Verjaardagslied", url: "https://www.dropbox.com/scl/fi/jxbq4mzcek1y7iqkrzt9v/Verjaardagslied-aankondiging.mp3?rlkey=tgztbed3l3k5onzcxpy94mq84&st=6qrv0po0&dl=0", periode: "middag", specialePeriode: "normaal" },
-{ title: "Monkey Beach News", url: "https://www.dropbox.com/scl/fi/erewhi7p87lc0cc8em8rg/Monkey-Beach-News-Today-snow.mp3?rlkey=lt14bkgkmq5qdnd312xchpr1o&st=xmtp80d7&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/sgjwglver7kqiuin2jho4/Cocunut-bar-Winter.mp3?rlkey=vfg42qhbixvk1ecv1y6n32trg&st=6p4t2suv&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Monkey Beach FM Reclame", url: "https://www.dropbox.com/scl/fi/vzj5druc0rjh76d36b175/Monkey-beach-Ski-en-Glyde.mp3?rlkey=4eruph8ua8zdo8bq9td8556iy&st=lefx27jo&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "A Beachy Christmas Love Song", url: "https://www.dropbox.com/scl/fi/neftz1kg7mnje2x3808hc/A-Beachy-Christmas-Love-Song-Romantic-Tropical-Christmas-Music-Original-New-Christmas-Song.mp3?rlkey=8cg8xgn3iv9a5pihx5jeefesm&st=3cdyangz&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Colbie Caillat - Christmas In The Sand", url: "https://www.dropbox.com/scl/fi/4z04bfvgzq7jbee9h31q7/Colbie-Caillat-Christmas-In-The-Sand-Official-Video.mp3?rlkey=lzxinj63p9huwhp4i8sgs8rx4&st=wx6cuerl&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "EchoGate Studios - Tropical Christmas", url: "https://www.dropbox.com/scl/fi/9och6w0gql8wc872abqgl/EchoGate-Studios-Tropical-Christmas-_-AI-Holiday-Island-Music-F_124a07Zp8.mp3?rlkey=i3w6kczut8ox96q4dtzt0438u&st=g1erltlo&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "The Beach Boys - Little Saint Nick", url: "https://www.dropbox.com/scl/fi/hj2ity9r96km4d0281b2k/The-Beach-Boys-Little-Saint-Nick.mp3?rlkey=ahf7vb7q8ev89b48jb82vj5su&st=1jv2rq0p&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Johannes Linstead - A New Holiday", url: "https://www.dropbox.com/scl/fi/cdkfqq6anlv8cnres3g25/Tropical-Christmas-A-New-Holiday-Ukulele-Classic-by-Johannes-Linstead.mp3?rlkey=8cldzlep8w3i4kxq27jedphw8&st=eyo7fxsx&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Wham - Last Christmas", url: "https://www.dropbox.com/scl/fi/iv7i6zbu0l5gxln1cqvw9/aankondiging-Last-Christmas.mp3?rlkey=ru4sl0ugr5qj2kidibk02c157&st=neg92dvq&dl=0", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Mariah Carey - All I Want for Christmas Is You", url: "https://www.dropbox.com/scl/fi/snjgqa4a72nn1i4gdiyc9/Aankondiging-All-I-Want.mp3?rlkey=2db1ahrz9qqsrf3cbx6pc5mlb&st=hvl62ath&dl=0", periode: "altijd", specialePeriode: "kerst" },
-{ title: "Tropical Christmas", url: "https://www.dropbox.com/scl/fi/4e7zj2ofbkv7cc7ov3r2g/Tropical-Christmas.mp3?rlkey=08b8sx4v3d0q80b8wcit5yqe5&st=zo4zzg85&raw=1", periode: "altijd", specialePeriode: "kerst" },
-{ title: "ABBA - Happy New Year", url: "https://www.dropbox.com/scl/fi/sxlgq35coit6ok5r4dbiy/Happy-New-Year-aankondiging.mp3?rlkey=dlybbqo8jvfddx18j258gvpzm&st=2pw6ipvx&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
-{ title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/x8zg2l1qukfv4c0p51awb/De-laatste-dag-van-het-jaar-Jingle.mp3?rlkey=kdzxb10e8k03ygd5atgeigzvg&st=7bks26dt&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
-{ title: "Monkey Beach FM", url: "https://www.dropbox.com/scl/fi/0e68uabppnggqeauekmt4/De-laatste-dag-tekst-lang.mp3?rlkey=skldurnvinmlfu96r1r777vd4&st=tlfj3kso&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
+{ title: "Chennot Glenn Su - Spooky Scary Skeletons Remix🎃", url: "https://www.dropbox.com/scl/fi/raqze1wyy99vjwj31okyj/Spooky-Scary-Skeletons-Chennot-Glenn-Su-Remix.mp3?rlkey=iu3fi40wsig7m3njnwdaffbhq&st=e2y9mxtc&dl=0", periode: "altijd", specialePeriode: "halloween" },
+{ title: "Monkey Beach FM🎃", url: "https://www.dropbox.com/scl/fi/qbcgvg3n0vshm33dzxnqx/Halloween-header-short.mp3?rlkey=2g2m61ciahyqo4cs78uzei5sx&st=fx8gy5kj&dl=0", periode: "altijd", specialePeriode: "halloween" },
+{ title: "Monkey Beach FM🎃", url: "https://www.dropbox.com/scl/fi/liocz949dw8citb3vn43z/Halloween-Tekst-Lang.mp3?rlkey=l477nizl2hleh3i864otng9b4&st=rpn1nfa7&dl=0", periode: "altijd", specialePeriode: "halloween" },
+{ title: "Monkey Beach News🎄", url: "https://www.dropbox.com/scl/fi/erewhi7p87lc0cc8em8rg/Monkey-Beach-News-Today-snow.mp3?rlkey=lt14bkgkmq5qdnd312xchpr1o&st=xmtp80d7&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Monkey Beach FM Reclame🎄", url: "https://www.dropbox.com/scl/fi/sgjwglver7kqiuin2jho4/Cocunut-bar-Winter.mp3?rlkey=vfg42qhbixvk1ecv1y6n32trg&st=6p4t2suv&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Monkey Beach FM Reclame🎄", url: "https://www.dropbox.com/scl/fi/vzj5druc0rjh76d36b175/Monkey-beach-Ski-en-Glyde.mp3?rlkey=4eruph8ua8zdo8bq9td8556iy&st=lefx27jo&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "A Beachy Christmas Love Song🎄", url: "https://www.dropbox.com/scl/fi/neftz1kg7mnje2x3808hc/A-Beachy-Christmas-Love-Song-Romantic-Tropical-Christmas-Music-Original-New-Christmas-Song.mp3?rlkey=8cg8xgn3iv9a5pihx5jeefesm&st=3cdyangz&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Colbie Caillat - Christmas In The Sand🎄", url: "https://www.dropbox.com/scl/fi/4z04bfvgzq7jbee9h31q7/Colbie-Caillat-Christmas-In-The-Sand-Official-Video.mp3?rlkey=lzxinj63p9huwhp4i8sgs8rx4&st=wx6cuerl&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "EchoGate Studios - Tropical Christmas🎄", url: "https://www.dropbox.com/scl/fi/9och6w0gql8wc872abqgl/EchoGate-Studios-Tropical-Christmas-_-AI-Holiday-Island-Music-F_124a07Zp8.mp3?rlkey=i3w6kczut8ox96q4dtzt0438u&st=g1erltlo&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "The Beach Boys - Little Saint Nick🎄", url: "https://www.dropbox.com/scl/fi/hj2ity9r96km4d0281b2k/The-Beach-Boys-Little-Saint-Nick.mp3?rlkey=ahf7vb7q8ev89b48jb82vj5su&st=1jv2rq0p&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Johannes Linstead - A New Holiday🎄", url: "https://www.dropbox.com/scl/fi/cdkfqq6anlv8cnres3g25/Tropical-Christmas-A-New-Holiday-Ukulele-Classic-by-Johannes-Linstead.mp3?rlkey=8cldzlep8w3i4kxq27jedphw8&st=eyo7fxsx&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Wham - Last Christmas🎄", url: "https://www.dropbox.com/scl/fi/iv7i6zbu0l5gxln1cqvw9/aankondiging-Last-Christmas.mp3?rlkey=ru4sl0ugr5qj2kidibk02c157&st=neg92dvq&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Mariah Carey - All I Want for Christmas Is You🎄", url: "https://www.dropbox.com/scl/fi/snjgqa4a72nn1i4gdiyc9/Aankondiging-All-I-Want.mp3?rlkey=2db1ahrz9qqsrf3cbx6pc5mlb&st=hvl62ath&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Tropical Christmas🎄", url: "https://www.dropbox.com/scl/fi/4e7zj2ofbkv7cc7ov3r2g/Tropical-Christmas.mp3?rlkey=08b8sx4v3d0q80b8wcit5yqe5&st=zo4zzg85&raw=1", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Bing Crosby - Mele Kalikimaka🎄", url: "https://www.dropbox.com/scl/fi/zv7h0hsunxvst38q5ro18/Bing-Crosby-The-Andrews-Sisters-Mele-Kalikimaka.mp3?rlkey=lqlvmp7b4rkjqwwb8qj48xcg7&st=1i738f6g&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "The Holly Lane Band - Deck the Halls🎄", url: "https://www.dropbox.com/scl/fi/7q979fely4rl95avqy4ym/Deck-The-Halls-Island-Version-The-Holly-Lane-Band.mp3?rlkey=o6ycsrfkthqrhkj5qlej1pzpj&st=dsiy80h1&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Carly Jamison - I'm getting a ukulele for Christmas🎄", url: "https://www.dropbox.com/scl/fi/m7bamvl0tcgreqamtppc6/I-m-Getting-a-Ukulele-for-Christmas.mp3?rlkey=6fbw1pw8vleatua3rj9971aso&st=yu231i74&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Caribbean Island steel drum troupe - Jingle Bells🎄", url: "https://www.dropbox.com/scl/fi/ji2xyp7rnq0gs2djlbic0/Jingle-Bells.mp3?rlkey=czuulv5skt3b4v7qpan3y08nd&st=5jux0rfo&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "Jose Feliciano - Feliz Navidad🎄", url: "https://www.dropbox.com/scl/fi/wez4whn9cq8f0hrq036po/Jos-Feliciano-Feliz-Navidad-Official-Audio.mp3?rlkey=0ojvob02ioryi6j0e85zxz4l2&st=p4iypvgu&dl=0", periode: "altijd", specialePeriode: "kerst" },
+{ title: "ABBA - Happy New Year🥂", url: "https://www.dropbox.com/scl/fi/sxlgq35coit6ok5r4dbiy/Happy-New-Year-aankondiging.mp3?rlkey=dlybbqo8jvfddx18j258gvpzm&st=2pw6ipvx&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
+{ title: "Monkey Beach FM🥂", url: "https://www.dropbox.com/scl/fi/x8zg2l1qukfv4c0p51awb/De-laatste-dag-van-het-jaar-Jingle.mp3?rlkey=kdzxb10e8k03ygd5atgeigzvg&st=7bks26dt&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
+{ title: "BB King - Bringing in a Brand New Year🥂", url: "https://www.dropbox.com/scl/fi/bf6vgy6atuqo503oss5z3/BB-King-Bringing-In-A-Brand-New-Year.mp3?rlkey=48q4060dbwpmfa5xh8gvs70x8&st=11i3l9tt&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
+{ title: "Katy Perry - Fire Work🥂", url: "https://www.dropbox.com/scl/fi/5hf0o6wieaju0vq3fdeew/Katy-Perry-s-FIREWORK-Afro-Soul.mp3?rlkey=zlicga45zep4085gyvpmm1mxu&st=4voeyuw0&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
+{ title: "Kool and the Gang- Celebration (Remix) 🥂", url: "https://www.dropbox.com/scl/fi/buhvi9xdc6i58kmttx8zc/Celebration-Kool-The-Gang-Melodic-Afro-Progressive-House-Cover-Remix-Sunset-Festival-2026.mp3?rlkey=695woh8k03xh4ccplk3h1uig8&st=uuwyfuvs&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
+{ title: "Monkey Beach FM🥂", url: "https://www.dropbox.com/scl/fi/0e68uabppnggqeauekmt4/De-laatste-dag-tekst-lang.mp3?rlkey=skldurnvinmlfu96r1r777vd4&st=tlfj3kso&dl=0", periode: "altijd", specialePeriode: "oudjaar" },
         ];
 
         // ========================================================
@@ -682,86 +696,147 @@ if (isKerstPeriode) {
         muurPoster.src = "https://www.dropbox.com/scl/fi/31fr5ik18pdbud649ccxi/MBFM-Poster-Donker.png?rlkey=pl5jcks5ji9sbs7tzhsjie4mg&st=3f2tiqx1&raw=1";
     }
 }        // ========================================================
-        // GOOGLE CAST & ACHTERGROND VEILIGHEID
-        // ========================================================
-        let castSession = null;
-        function laadGoogleCastVeilig() {
-            const script = document.createElement('script');
-            script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
-            document.head.appendChild(script);
-        }
+// GOOGLE CAST & ACHTERGROND VEILIGHEID (ASYNCHROON)
+// ========================================================
+let castSession = null;
+let castScriptGeladen = false;
 
-        window.__onGCastApiAvailable = function(isAvailable) {
-            if (isAvailable) initializeCastApi();
-        };
+// We laden het Cast-script pas in als dat nodig is (voorkomt 30 sec vertraging!)
+function laadGoogleCastVeilig(callback) {
+    if (castScriptGeladen || typeof cast !== 'undefined') {
+        if (callback) callback();
+        return;
+    }
 
-        function initializeCastApi() {
-            const context = cast.framework.CastContext.getInstance();
-            context.setOptions({
-                receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
-                autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGINAL_SCOPED
-            });
-            context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, (event) => {
-                if (event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
-                    castSession = context.getCurrentSession();
-                    if (vorigNummerUrl === "") playRandomTrack();
-                    else {
-                        const huidigeTrack = playlist.find(t => t.url === vorigNummerUrl);
-                        if(huidigeTrack) castMedia(huidigeTrack);
-                    }
-                }
-            });
-        }
+    const script = document.createElement('script');
+    script.id = 'google-cast-sdk';
+    script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
+    
+    script.onload = () => {
+        castScriptGeladen = true;
+        if (callback) callback();
+    };
 
-        function startCasting() {
-            const context = cast.framework.CastContext.getInstance();
-            context.requestSession().then(() => {
+    document.head.appendChild(script);
+}
+
+// Pas 3 seconden NÁ het laden van de pagina bereiden we Cast op de achtergrond voor
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        laadGoogleCastVeilig();
+    }, 3000);
+});
+
+window.__onGCastApiAvailable = function(isAvailable) {
+    if (isAvailable && typeof cast !== 'undefined' && cast.framework) {
+        initializeCastApi();
+    }
+};
+
+function initializeCastApi() {
+    try {
+        const context = cast.framework.CastContext.getInstance();
+        context.setOptions({
+            receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGINAL_SCOPED
+        });
+        context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, (event) => {
+            if (event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
                 castSession = context.getCurrentSession();
-                if (vorigNummerUrl !== "") {
+                if (typeof vorigNummerUrl !== 'undefined' && vorigNummerUrl !== "") {
                     const huidigeTrack = playlist.find(t => t.url === vorigNummerUrl);
-                    if(huidigeTrack) castMedia(huidigeTrack);
+                    if (huidigeTrack) castMedia(huidigeTrack);
+                } else if (typeof playRandomTrack === 'function') {
+                    playRandomTrack();
                 }
-                else playRandomTrack();
-            });
-        }
-
-        function castMedia(track) {
-            if (!castSession) return;
-            let streamUrl = track.url.replace("dl=0", "raw=1");
-            const mediaInfo = new chrome.cast.media.MediaInfo(streamUrl, 'audio/mp3');
-            mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
-            mediaInfo.metadata.title = track.title;
-            mediaInfo.metadata.artist = "Monkey Beach FM";
-            const request = new chrome.cast.media.LoadRequest(mediaInfo);
-            castSession.getSessionObj().loadMedia(request, () => {}, () => {});
-        }
-
-        let wakeLock = null;
-        async function activeerWakeLock() {
-            try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {}
-        }
-        function stopWakeLock() { if (wakeLock !== null) { wakeLock.release(); wakeLock = null; } }
-
-        function updateMediaSession(track) {
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: track.title,
-                    artist: 'Monkey Beach FM',
-                    album: 'Tropische Radio'
-                });
-                navigator.mediaSession.setActionHandler('nexttrack', () => { playRandomTrack(); });
-                navigator.mediaSession.setActionHandler('play', () => { togglePlay(); });
-                navigator.mediaSession.setActionHandler('pause', () => { togglePlay(); });
-            }
-        }
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible' && isPlaying) {
-                activeerWakeLock();
-                startAchtergrondAudioHack();
-                if (audioPlayer.paused && isPlaying) playRandomTrack();
             }
         });
+    } catch (e) {
+        console.warn("Cast initialisatie overgeslagen:", e);
+    }
+}
+
+function startCasting() {
+    // Als het script nog niet geladen was, laden we het nu direct alsnog in!
+    laadGoogleCastVeilig(() => {
+        let pogingen = 0;
+        const checkCastLoop = setInterval(() => {
+            pogingen++;
+            if (typeof cast !== "undefined" && cast.framework) {
+                clearInterval(checkCastLoop);
+                try {
+                    const context = cast.framework.CastContext.getInstance();
+                    context.requestSession().then(() => {
+                        castSession = context.getCurrentSession();
+                        if (typeof vorigNummerUrl !== 'undefined' && vorigNummerUrl !== "") {
+                            const huidigeTrack = playlist.find(t => t.url === vorigNummerUrl);
+                            if (huidigeTrack) castMedia(huidigeTrack);
+                        } else if (typeof playRandomTrack === 'function') {
+                            playRandomTrack();
+                        }
+                    }).catch((err) => {
+                        console.log("Casting geannuleerd:", err);
+                    });
+                } catch (err) {
+                    console.error("Fout bij starten van casting:", err);
+                }
+            } else if (pogingen > 20) { // Na 2 seconden proberen stoppen
+                clearInterval(checkCastLoop);
+                alert("Google Cast is niet beschikbaar. Gebruik Chrome of Edge over HTTPS.");
+            }
+        }, 100);
+    });
+}
+
+function castMedia(track) {
+    if (!castSession || !track) return;
+    let streamUrl = track.url.replace("dl=0", "raw=1");
+    const mediaInfo = new chrome.cast.media.MediaInfo(streamUrl, 'audio/mp3');
+    mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
+    mediaInfo.metadata.title = track.title || "Monkey Beach FM";
+    mediaInfo.metadata.artist = "Monkey Beach FM";
+    const request = new chrome.cast.media.LoadRequest(mediaInfo);
+    castSession.getSessionObj().loadMedia(request, () => {}, () => {});
+}
+
+let wakeLock = null;
+async function activeerWakeLock() {
+    try { 
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen'); 
+        }
+    } catch (err) {}
+}
+
+function stopWakeLock() { 
+    if (wakeLock !== null) { 
+        wakeLock.release(); 
+        wakeLock = null; 
+    } 
+}
+
+function updateMediaSession(track) {
+    if ('mediaSession' in navigator && track) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: track.title,
+            artist: 'Monkey Beach FM',
+            album: 'Tropische Radio'
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', () => { if (typeof playRandomTrack === 'function') playRandomTrack(); });
+        navigator.mediaSession.setActionHandler('play', () => { if (typeof togglePlay === 'function') togglePlay(); });
+        navigator.mediaSession.setActionHandler('pause', () => { if (typeof togglePlay === 'function') togglePlay(); });
+    }
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && typeof isPlaying !== 'undefined' && isPlaying) {
+        activeerWakeLock();
+        if (typeof startAchtergrondAudioHack === 'function') startAchtergrondAudioHack();
+        if (typeof audioPlayer !== 'undefined' && audioPlayer.paused && typeof playRandomTrack === 'function') {
+            playRandomTrack();
+        }
+    }
+});
     </script>
 </body>
 </html>
