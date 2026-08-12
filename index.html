@@ -6,19 +6,20 @@
     <title>Monkey Beach FM</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        /* FULLSCREEN TROPISCHE INTERFACE *//
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            /* overflow weghalen bij body zodat we eventuele zwarte balken op TV netjes opvangen */
-            font-family: 'Courier New', Courier, monospace; /* Typmachine stijl voor de hele site */
-            background-color: #120a05;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        /* FULLSCREEN TROPISCHE INTERFACE */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #120a05 !important; /* Dwingt de donkere kleur af, ook op TV's */
+    background: #120a05 !important;
+    overflow: hidden; /* Haalt eventuele witte scrollbalken/randen weg */
+    font-family: 'Courier New', Courier, monospace; /* Typmachine stijl voor de hele site */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
         /* De magische achtergrondafbeelding */
         .scenery-container {
